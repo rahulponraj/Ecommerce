@@ -1,0 +1,123 @@
+body{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.rightDiv {
+    text-align: center;
+    margin-left: 25px;
+    height: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 2px;
+    box-shadow: 4px 4px 11px rgba(112, 110, 110, 0.13);
+    display: flex;
+    flex-wrap: wrap; /* Allow order cards to wrap to the next row */
+    justify-content: center; /* Center the order cards horizontally */
+    display: flex;
+    flex-direction: column;
+}
+.order-card {
+    /* Remove fixed height and add minimum height */
+    min-height: 130px;
+    display: flex;
+    border: solid 1px rgba(0, 0, 0, 0.055);
+    border-radius: 4px;
+    /* Add overflow property if needed */
+    overflow: hidden;
+    width: 100%;
+}
+
+.image-card{
+    width: 100px;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-card img{
+width: 80%;
+height: auto;
+}
+.order-card:hover{
+    background-color: #dad5d53f;
+}
+
+.orderId{
+margin-top: 15px;
+font-size:12px;
+font-family: sans-serif;
+display:flex ;
+justify-content: flex-start;
+color: gray;
+
+
+}
+.cardLink{
+    text-decoration: none;
+}
+.status{
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.statusText{
+font-size: 12px;
+text-align: left;
+color: black;
+font-weight:bold;
+text-decoration: none;
+}
+
+.estimatedDelivery{
+    font-size: 12px;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+}
+
+.paymentMode{
+    font-size: 12px;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+}
+
+.arrow{
+    margin-left: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+.arrow img{
+    width: 15px;
+}
+.leftDiv li{
+    list-style:none ;
+    margin-top: 15px;
+}
+.myAccount{
+   padding-top: 20px;
+    text-align: left;
+   
+    padding-left: 30px;
+}
+.myAccount h4,.rightDiv h4{
+    font-size: 20px;
+    font-weight: bold;
+}
+.leftDiv h6{
+    
+    font-weight: bold;
+}
+.leftDiv a{
+    color: rgba(0, 0, 0, 0.638);
+    text-decoration: none;
+}
+.leftDiv a:hover{
+    color: #f26422;
+    text-decoration: underline;
+}

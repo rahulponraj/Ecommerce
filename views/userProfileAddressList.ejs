@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Address List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/listProducts.css">
+    <link rel="stylesheet" href="/css1/style.css" type="text/css">
+    <link rel="stylesheet" href="/css1/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css1/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css1/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/slicknav.min.css" type="text/css">
+    
+     <style>
+         h1 {
+            color: #369beee5;
+            /* Blue color */
+            font-size: 36px;
+            /* Adjust the font size as needed */
+            font-weight: bold;
+            /* Make the text bold */
+            text-align: left;
+            /* Center align the text */
+            margin-top: 15px;
+            margin-left: 20px;
+            /* Add some top margin for spacing */
+            text-transform: uppercase;
+            /* Convert text to uppercase */
+            letter-spacing: 2px;
+            /* Increase letter spacing */
+        }
+        .list-group-item.active {
+        background-color: #369beee5;
+        /* Light blue color */
+    }
+
+    .list-group-item {
+        text-align: center;
+        /* Center align the text */
+    }
+
+     </style> 
+       
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="/ashion"><img src="/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="/ashion">Home</a></li>
+                            <li><a href="/home?For=Women">Women’s</a></li>
+                            <li><a href="/home?For=Men">Men’s</a></li>
+                            <li><a href="/home?For=Kids">Kid's</a></li>
+                            <li><a href="#">My Account</a>
+                                <ul class="dropdown">
+                                    <li><a href="/user/userProfile">Dashboard</a></li>
+                                    <li><a href="/user/userProfileAddressList">Addresses</a></li>
+                                    <li><a href="/user/userProfileOrders">Orders</a></li>
+                                    <li><a href="/user/userWallet">Wallet</a></li>
+                                </ul>
+                            </li>
+                        
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                       
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="/home/wishlist"><span class="icon_heart_alt"></span>
+                               
+                            </a></li>
+                            <li><a href="/home/cart"><span class="icon_bag_alt"></span>
+                                
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <h1> YOUR ACCOUNT</h1>
+    <div class="row">
+        <div class="col-3">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action " data-tab="account" id="list-accountdetails-list"
+                    data-toggle="list" href="/user/userProfile" role="tab" aria-controls="home">Account details</a>
+                <a class="list-group-item list-group-item-action active" data-tab="addresses" id="list-Addresses-list"
+                    data-toggle="list" href="/user/userProfileAddressList" role="tab"
+                    aria-controls="Addresses">Addresses</a>
+                <a class="list-group-item list-group-item-action " data-tab="orders" id="list-Orders-list"
+                    data-toggle="list" href="/user/userProfileOrders" role="tab" aria-controls="Orders">Orders</a>
+                    <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
+                    data-toggle="list" href="/user/userWallet" role="tab" aria-controls="Orders">Wallet</a>
+                <a class="list-group-item list-group-item-action" data-tab="logout" id="list-settings-list"
+                    data-toggle="list" href="/user/logout" role="tab" aria-controls="settings">LogOut</a>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-6">
+            <% if(typeof address!=='undefined' &&address.length>0){ %>
+                <% for(let i=0;i<address.length;i++) {%>
+                    <div class="card">
+                        <div class="card-body">
+                            <% if(address[i].Default=="true" ){ %>
+                                <div class="default">Default</div>
+                                <%}%>
+                                    <div class="default">
+                                        <%= address[i].addressType %>
+                                    </div>
+                                    <div class="name">
+                                        <%= address[i].name %>
+                                    </div>
+                                    <div class="house">
+                                        <%= address[i].buildingName %>,<%= address[i].locality %>
+                                    </div>
+                                    <div class="landmark">
+                                        <%= address[i].landmark %>
+                                    </div>
+                                    <div class="district">
+                                        <%= address[i].city %>,<%= address[i].state %>
+                                    </div>
+                                    <div class="pincode">India-<%= address[i].pincode %>
+                                    </div>
+                                    <div>
+                                        <p class="phone">Phone:<%= address[i].mobile %>
+                                        </p>
+                                    </div>
+                                    <a href="#" class="btn btn-primary"
+                                        onclick="openEditAddress(<%= JSON.stringify(address[i]) %>)">Edit Address</a>
+                                    <a href="#" class="btn btn-danger"
+                                        onclick="openDeleteAddress(<%= JSON.stringify(address[i]) %>)">Delete
+                                        Address</a>
+
+                        </div>
+                    </div>
+                    <% } %>
+                        <% } %>
+                        <div class="overlay" id="overlay"></div>
+        </div>
+
+    </div>
+   
+    <!--====== EDIT ADDRESS =====================-->
+   
+        
+        <div class="form-popup" id="editAddres">
+            <form action="/user/userProfileAddressList/updateAddress" method="post" class="form-container">
+                <div class="close-btn">
+                    <h5>Edit Address Details</h5> <button type="button" class="btn-cancel"
+                        onclick="closeEditAddres()"><img src="/images/icons8-cancel-100.png"></button>
+                </div>
+
+                <label>Name*</label>
+
+                <input type="text" id="editName" placeholder="" name="name">
+
+                <label>Mobile*</label>
+
+                <input type="text" id="editMobile" name="mobile">
+
+                <label>Pin Code*</label>
+
+                <input type="text" id="editPincode" name="pincode">
+
+                <label>Locality/Area/Street*</label>
+
+                <input type="text" id="editLocality" name="locality">
+
+                <label>Flat Number/Building Name*</label>
+
+                <input type="text" id="editBuildingName" name="buildingname">
+
+                <label>landmark</label>
+
+                <input type="text" id="editLandmark" name="landmark">
+
+                <label>District/City*</label>
+
+                <input type="text" id="editCity" name="city">
+
+                <label>State</label>
+
+                <input type="text" id="editState" name="state">
+
+                <label>Adress Type</label>
+
+                <div class="addressTypeRadio">
+                    <input type="radio" name="addressType" value="Home" id="homeRadio">
+                    <label for="homeRadio">Home</label>
+
+                    <input type="radio" name="addressType" value="Work" id="workRadio">
+                    <label for="workRadio">Work</label>
+
+                    <input type="radio" name="addressType" value="Others" id="othersRadio">
+                    <label for="othersRadio">Others</label>
+
+
+                </div>
+
+                <input type="hidden" id="addressId" name="id">
+                <button type="submit" class="btn">Save</button>
+
+            </form>
+        </div>
+        <!------------------------------- delete adress popup--------------------------------- -->
+
+        <div class="deleteFormPopup" id="deleteAdress">
+            <form action="/user/userProfileAddressList/deleteAddress" method="post" class="form-container">
+                <input type="hidden" name="id" id="addressDeleteId">
+                <div class="close-btn">
+                    <h4>Delete Address?</h4>
+                </div>
+
+                <div class="deleteAddress"> <button type="button" onclick="closeDeleteAddress()"
+                        class="btn">Close</button>
+                    <button type="submit" class="btn">Delete Address</button>
+                </div>
+
+            </form>
+        </div>
+    
+    <div class="row justify-content-center">
+        <div class="dotted-box">
+            <a href="#" id="plus-symbol">+</a>
+        </div>
+    </div>
+    <script src="/javascript/useraddress.js"></script>
+</body>
+
+<script>
+    const listItems = document.querySelectorAll('.list-group-item');
+
+    listItems.forEach(item => {
+        item.addEventListener('click', function () {
+            // Remove 'active' class from all items
+            listItems.forEach(item => item.classList.remove('active'));
+
+            // Add 'active' class to the clicked item
+            this.classList.add('active');
+        });
+    });
+    document.getElementById("plus-symbol").addEventListener("click", function () {
+        // Replace the '#' with your desired link URL
+        window.location.href = "/user/userProfileEditAddress";
+    });
+</script>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Orders List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/listProducts.css">
+    <link rel="stylesheet" href="/css/userOrder.css">
+    <link rel="stylesheet" href="/css1/style.css" type="text/css">
+    <link rel="stylesheet" href="/css1/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css1/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css1/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/slicknav.min.css" type="text/css">
+    <style>
+        h1 {
+            color: #369beee5;
+            /* Blue color */
+            font-size: 36px;
+            /* Adjust the font size as needed */
+            font-weight: bold;
+            /* Make the text bold */
+            text-align: left;
+            /* Center align the text */
+            margin-top: 30px;
+            margin-left: 20px;
+            /* Add some top margin for spacing */
+            text-transform: uppercase;
+            /* Convert text to uppercase */
+            letter-spacing: 2px;
+            /* Increase letter spacing */
+        }
+
+        .list-group-item.active {
+            background-color: #369beee5;
+            /* Light blue color */
+        }
+
+        .list-group-item {
+            text-align: center;
+            /* Center align the text */
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="/ashion"><img src="/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="/ashion">Home</a></li>
+                            <li><a href="/home?For=Women">Women’s</a></li>
+                            <li><a href="/home?For=Men">Men’s</a></li>
+                            <li><a href="/home?For=Kids">Kid's</a></li>
+                            <li><a href="#">My Account</a>
+                                <ul class="dropdown">
+                                    <li><a href="/user/userProfile">Dashboard</a></li>
+                                    <li><a href="/user/userProfileAddressList">Addresses</a></li>
+                                    <li><a href="/user/userProfileOrders">Orders</a></li>
+                                    <li><a href="/user/userWallet">Wallet</a></li>
+                                </ul>
+                            </li>
+                        
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                       
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="/home/wishlist"><span class="icon_heart_alt"></span>
+                               
+                            </a></li>
+                            <li><a href="/home/cart"><span class="icon_bag_alt"></span>
+                                
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <h1> YOUR ACCOUNT</h1>
+    <div class="row">
+        <div class="col-3">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action " data-tab="account" id="list-accountdetails-list"
+                    data-toggle="list" href="/user/userProfile" role="tab" aria-controls="home">Account details</a>
+                <a class="list-group-item list-group-item-action" data-tab="addresses" id="list-Addresses-list"
+                    data-toggle="list" href="/user/userProfileAddressList" role="tab"
+                    aria-controls="Addresses">Addresses</a>
+                <a class="list-group-item list-group-item-action active" data-tab="orders" id="list-Orders-list"
+                    data-toggle="list" href="/user/userProfileOrders" role="tab" aria-controls="Orders">Orders</a>
+                    <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
+                    data-toggle="list" href="/user/userWallet" role="tab" aria-controls="Orders">Wallet</a>
+                <a class="list-group-item list-group-item-action" data-tab="logout" id="list-settings-list"
+                    data-toggle="list" href="/user/logout" role="tab" aria-controls="settings">LogOut</a>
+            </div>
+
+
+        </div>
+    
+    <div class="col-md-8">
+        <div class="rightDiv">
+            <h4>My Orders</h4>
+            <p>Track your open orders & view the summary of your past orders</p>
+            <% for (let i = 0; i < orders.length; i++) { %>
+                <% if (orders[i].cart.length > 0 && orders[i].cart[0].product) { %>
+                <div class="orderId">Order Id:<%= orders[i].orderId %></div>
+                <a  class="cardLink" href="/user/userProfileOrderDetails?orderId=<%= orders[i].orderId %>"><div class="order-card">
+                  
+                    <div class="image-card">
+                      
+                      <img class="img-fluid image" src="data:<%= orders[i].cart[0].product.images[0].contentType %>;base64,<%= orders[i].cart[0].product.images[0].data.toString('base64') %>">
+                    </div>
+                  <% } %>
+                  <div class="status">
+                    <% if (orders[i].status === "Cancelled") { %>
+                        <div  class="statusText" style="color: rgba(255, 0, 0, 0.523);"><%= orders[i].status %></div>
+                      <% } else { %>
+                        <div class="statusText"><%= orders[i].status %></div>
+                      <% } %>
+                 
+                    <div class="estimatedDelivery">Estimated Delivery Tue,18 Aug</div>
+                    <div class="paymentMode"><%= orders[i].paymentMode %></div>
+                  </div>
+                  <div class="arrow">
+                    <img src="/images/icons8-next-24.png">
+                  </div>
+                </div></a>
+              <% } %>
+              
+        </div>
+    </div>
+</div>
+
+
+
+   
+</body>
+
+<script>
+    const listItems = document.querySelectorAll('.list-group-item');
+
+    listItems.forEach(item => {
+        item.addEventListener('click', function () {
+            // Remove 'active' class from all items
+            listItems.forEach(item => item.classList.remove('active'));
+
+            // Add 'active' class to the clicked item
+            this.classList.add('active');
+        });
+    });
+</script>
+
+</html>

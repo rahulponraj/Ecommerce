@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login-Ashion</title>
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user-login.css">
+    <link rel="stylesheet" href="/css1/style.css" type="text/css">
+    <link rel="stylesheet" href="/css1/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css1/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css1/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css1/slicknav.min.css" type="text/css">
+</head>
+<body>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="/ashion"><img src="/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="/ashion">Home</a></li>
+                            <li><a href="/home?For=Women">Women’s</a></li>
+                            <li><a href="/home?For=Men">Men’s</a></li>
+                            <li><a href="/home?For=Kids">Kid's</a></li>
+                            <li><a href="#">My Account</a>
+                                <ul class="dropdown">
+                                    <li><a href="/user/userProfile">Dashboard</a></li>
+                                    <li><a href="/user/userProfileAddressList">Addresses</a></li>
+                                    <li><a href="/user/userProfileOrders">Orders</a></li>
+                                    <li><a href="/user/userWallet">Wallet</a></li>
+                                </ul>
+                            </li>
+                        
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            <% if (typeof isLogedIn !=='undefined' && isLogedIn==="true"){ %> 
+                                <a class="nav-link" href="/user/logout">Logout</a>
+                                <% }
+                                else { %>
+                                    <a href="/user/login">Login</a>
+                                    <a href="/user/signup">Register</a>
+                               <% } 
+                               %>
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="/home/wishlist"><span class="icon_heart_alt"></span>
+                               
+                            </a></li>
+                            <li><a href="/home/cart"><span class="icon_bag_alt"></span>
+                                
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div id="signup-popup">
+        <div id="signup-form">
+            <form class="signup-form-p" id="login-form" method="post" action="/user/login">
+                <h1>A.F</h1>
+                <h3>Login</h3>
+               
+                <div class="signup-input"><input  id="email"  type="text" name="email" placeholder="Email"></div>
+                <div id="email-error" class="error-message"></div>
+                <div class="signup-input"><input  id="password" type="password" name="password" placeholder="Password"></div>
+                <div id="password-error" class="error-message"></div>
+               <button class="signup" type="submit">Login</button>
+                <% if(typeof message !== 'undefined'){ %>
+                    <div><p style="color: red; text-align: center;"><%= message %></p></div>
+                    <% } %>
+                <div class="login">New user?<a href="/user/signup" id="login-link">Signup</a></div>
+                <div class="login"><a href="" id="login-link">forgot password?</a></div>
+                
+            </form>
+        </div>
+    </div>
+<script src="/javascript/userLogin-validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
