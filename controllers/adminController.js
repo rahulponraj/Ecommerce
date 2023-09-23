@@ -96,7 +96,7 @@ sendOTP = (phoneNumber, res) => {
   client.messages
     .create({
       body: `Your OTP for login COSTa is: ${OTPassword}`,
-      from: '+16676604699',
+      from: '+16676604699', 
       to: phoneNumber
     })
     .then(message => {
@@ -194,6 +194,7 @@ const verifyLogin = async (req,res) => {
     }
   } catch (error) {
     console.log(error.message);
+    
   }
 };
 
