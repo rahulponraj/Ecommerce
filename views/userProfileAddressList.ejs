@@ -56,22 +56,22 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="/ashion"><img src="/img/logo.png" alt=""></a>
+                        <a href="/"><img src="/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="/ashion">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><a href="/home?For=Women">Women’s</a></li>
                             <li><a href="/home?For=Men">Men’s</a></li>
                             <li><a href="/home?For=Kids">Kid's</a></li>
                             <li><a href="#">My Account</a>
                                 <ul class="dropdown">
-                                    <li><a href="/user/userProfile">Dashboard</a></li>
-                                    <li><a href="/user/userProfileAddressList">Addresses</a></li>
-                                    <li><a href="/user/userProfileOrders">Orders</a></li>
-                                    <li><a href="/user/userWallet">Wallet</a></li>
+                                    <li><a href="/user/profile">Dashboard</a></li>
+                                    <li><a href="/user/profileAddressList">Addresses</a></li>
+                                    <li><a href="/user/profileOrders">Orders</a></li>
+                                    <li><a href="/user/wallet">Wallet</a></li>
                                 </ul>
                             </li>
                         
@@ -104,14 +104,14 @@
         <div class="col-3">
             <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action " data-tab="account" id="list-accountdetails-list"
-                    data-toggle="list" href="/user/userProfile" role="tab" aria-controls="home">Account details</a>
+                    data-toggle="list" href="/user/profile" role="tab" aria-controls="home">Account details</a>
                 <a class="list-group-item list-group-item-action active" data-tab="addresses" id="list-Addresses-list"
-                    data-toggle="list" href="/user/userProfileAddressList" role="tab"
+                    data-toggle="list" href="/user/profileAddressList" role="tab"
                     aria-controls="Addresses">Addresses</a>
                 <a class="list-group-item list-group-item-action " data-tab="orders" id="list-Orders-list"
-                    data-toggle="list" href="/user/userProfileOrders" role="tab" aria-controls="Orders">Orders</a>
+                    data-toggle="list" href="/user/profileOrders" role="tab" aria-controls="Orders">Orders</a>
                     <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
-                    data-toggle="list" href="/user/userWallet" role="tab" aria-controls="Orders">Wallet</a>
+                    data-toggle="list" href="/user/wallet" role="tab" aria-controls="Orders">Wallet</a>
                 <a class="list-group-item list-group-item-action" data-tab="logout" id="list-settings-list"
                     data-toggle="list" href="/user/logout" role="tab" aria-controls="settings">LogOut</a>
             </div>
@@ -167,7 +167,7 @@
    
         
         <div class="form-popup" id="editAddres">
-            <form action="/user/userProfileAddressList/updateAddress" method="post" class="form-container">
+            <form action="/user/profileAddressList/updateAddress" method="post" class="form-container">
                 <div class="close-btn">
                     <h5>Edit Address Details</h5> <button type="button" class="btn-cancel"
                         onclick="closeEditAddres()"><img src="/images/icons8-cancel-100.png"></button>
@@ -228,7 +228,7 @@
         <!------------------------------- delete adress popup--------------------------------- -->
 
         <div class="deleteFormPopup" id="deleteAdress">
-            <form action="/user/userProfileAddressList/deleteAddress" method="post" class="form-container">
+            <form action="/user/profileAddressList/deleteAddress" method="post" class="form-container">
                 <input type="hidden" name="id" id="addressDeleteId">
                 <div class="close-btn">
                     <h4>Delete Address?</h4>
@@ -264,7 +264,7 @@
     });
     document.getElementById("plus-symbol").addEventListener("click", function () {
         // Replace the '#' with your desired link URL
-        window.location.href = "/user/userProfileEditAddress";
+        window.location.href = "/user/profileEditAddress";
     });
 </script>
 

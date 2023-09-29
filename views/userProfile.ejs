@@ -134,22 +134,22 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="/ashion"><img src="/img/logo.png" alt=""></a>
+                        <a href="/"><img src="/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="/ashion">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><a href="/home?For=Women">Women’s</a></li>
                             <li><a href="/home?For=Men">Men’s</a></li>
                             <li><a href="/home?For=Kids">Kid's</a></li>
                             <li><a href="#">My Account</a>
                                 <ul class="dropdown">
-                                    <li><a href="/user/userProfile">Dashboard</a></li>
-                                    <li><a href="/user/userProfileAddressList">Addresses</a></li>
-                                    <li><a href="/user/userProfileOrders">Orders</a></li>
-                                    <li><a href="/user/userWallet">Wallet</a></li>
+                                    <li><a href="/user/profile">Dashboard</a></li>
+                                    <li><a href="/user/profileAddressList">Addresses</a></li>
+                                    <li><a href="/user/profileOrders">Orders</a></li>
+                                    <li><a href="/user/wallet">Wallet</a></li>
                                 </ul>
                             </li>
                         
@@ -181,15 +181,15 @@
         <div class="col-3">
             <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active" data-tab="account"
-                    id="list-accountdetails-list" data-toggle="list" href="/user/userProfile" role="tab"
+                    id="list-accountdetails-list" data-toggle="list" href="/user/profile" role="tab"
                     aria-controls="home">Account details</a>
                 <a class="list-group-item list-group-item-action" data-tab="addresses" id="list-Addresses-list"
-                    data-toggle="list" href="/user/userProfileAddressList" role="tab"
+                    data-toggle="list" href="/user/profileAddressList" role="tab"
                     aria-controls="Addresses">Addresses</a>
                 <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
-                    data-toggle="list" href="/user/userProfileOrders" role="tab" aria-controls="Orders">Orders</a>
+                    data-toggle="list" href="/user/profileOrders" role="tab" aria-controls="Orders">Orders</a>
                 <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
-                    data-toggle="list" href="/user/userWallet" role="tab" aria-controls="Orders">Wallet</a>
+                    data-toggle="list" href="/user/wallet" role="tab" aria-controls="Orders">Wallet</a>
                 <a class="list-group-item list-group-item-action" data-tab="logout" id="list-settings-list"
                     data-toggle="list" href="/user/logout" role="tab" aria-controls="settings">LogOut</a>
             </div>
@@ -200,7 +200,7 @@
 
             <img src="/images/IMG_20230304_194721.jpg" alt="Round Image" class="round-image">
 
-            <form action="/user/userProfile" method="post" enctype="multipart/form-data">
+            <form action="/user/profile" method="post" enctype="multipart/form-data">
                 <label for="profileImage">Change Profile Picture</label>
                 <label class="custom-file-upload" for="profileImage">Choose File</label>
                 <input type="file" id="profileImage" name="profileImage" accept="image/*">
@@ -210,7 +210,7 @@
             </form>
         </div>
         <div class="col-6">
-            <form class="userProfile" action="/user/userProfile/updateInfo" method="post">
+            <form class="userProfile" action="/user/profile/updateInfo" method="post">
                 <% if(typeof user!=='undefined' ){ %>
                     <div class="form-group">
                         <label>Full Name</label>
@@ -252,7 +252,7 @@
     <!-- ------CHANGE EMAIL FORM--- ------->
 
     <div class="form-popup" id="emailForm">
-        <form action="/user/userProfile/changeEmail" method="post" class="form-container changeEmail">
+        <form action="/user/profile/changeEmail" method="post" class="form-container changeEmail">
             <div class="close-btn ">
                 <h4>Enter New Email Address</h4>
                 <button type="button" class="btn-cancel" onclick="closeEmailForm()"><img
@@ -326,7 +326,7 @@
 
     <!-- ----CHANGE PASSWORD FORM--- -->
     <div class="form-popup" id="pwdForm">
-        <form action="/user/userProfile/changePwd" method="post" class="form-container changePassword">
+        <form action="/user/profile/changePwd" method="post" class="form-container changePassword">
             <div class="close-btn">
                 <h4>Change Password</h4> <button type="button" class="btn-cancel" onclick="closePasswordForm()"><img
                         src="/images/icons8-cancel-100.png"></button>

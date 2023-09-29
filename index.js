@@ -35,7 +35,7 @@ const userRouter=require('./Routes/userRouter')
 const adminRouter=require('./Routes/adminRouter')
 const productRouter=require('./Routes/productRouter')
 
-app.use('/ashion',homepageRouter)
+app.use('/',homepageRouter)
 app.use('/user',userRouter)
 app.use('/admin',adminRouter)
 app.use('/home',productRouter)

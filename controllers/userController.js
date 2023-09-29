@@ -64,32 +64,11 @@ const loadHomepage=async(req,res)=>{
  
 }
 
-const updatedHomePage=async(req,res)=>{  
-  try{
-  
-    const women1=await Product.find({For:"Women"}).limit(4)
-    const women2=await Product.find({For:"Women"}).skip(4).limit(4)
-    
-    const men1=await Product.find({For:"Men"}).limit(4)
-    const men2=await Product.find({For:"Men"}).skip(4).limit(4)
-  
-    const kids1=await Product.find({For:"Kids"}).limit(4)
-    const kids2=await Product.find({For:"Kids"}).skip(4).limit(4)
-    const banner = await Banner.find({ status: "display" })
-   
-    res.render("warningclothing",{women1,women2,men1,men2,kids1,kids2,banner})
 
-   }
-   catch(error){
-     console.log(error.message); 
-    }
- 
- 
- }
 
 const loadLoginPage=(req,res)=>{ 
  if(req.session.isAuth){
-  res.redirect('/ashion')
+  res.redirect('/')
  }else{
   res.render('userLogin')
 }
@@ -228,7 +207,7 @@ const verifyLogin = async (req, res) => {
           req.session.userId = userdata._id
           req.session.isAuth = "true"
           console.log(req.session.userId);
-          res.redirect('/ashion');
+          res.redirect('/');
         } else {
           res.render('userLogin', { message: 'Invalid password' });
         }
@@ -329,7 +308,7 @@ const saveUserProfile = async (req, res) => {
   const userid = req.session.userId
   try {
     await Users.updateOne({ _id: new mongoose.Types.ObjectId(userid) }, { $set: { firstname: firstname } });
-    res.redirect('/user/userProfile');
+    res.redirect('/user/profile');
 
   } catch (error) {
     console.log(error);
@@ -543,7 +522,7 @@ const userProfileAddressDetails=async(req,res)=>{
     });
     await user.save()
 
-    res.redirect('/user/userProfileAddressList')
+    res.redirect('/user/profileAddressList')
 
   } catch (error) {
 
@@ -636,7 +615,7 @@ const updateAddress = async (req, res) => {
         }
       }
     );
-    res.redirect('/user/userProfileAddressList');
+    res.redirect('/user/profileAddressList');
   } catch (error) {
     console.log(error.message);
   }
@@ -687,7 +666,7 @@ const deleteAddress = async (req, res) => {
       { $pull: { address: { _id: new mongoose.Types.ObjectId(id) } } }
     );
 
-    res.redirect('/user/userProfileAddressList');
+    res.redirect('/user/profileAddressList');
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -1207,7 +1186,6 @@ module.exports = {
   downloadInvoice,
   loadWishlist,
   updateAddressInCheckout,
-  updatedHomePage,
   loadOrderPdf,
   loadOrderExcel,
   loadOrdersDateList
