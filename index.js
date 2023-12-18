@@ -35,17 +35,10 @@ const userRouter = require('./Routes/userRouter')
 const adminRouter = require('./Routes/adminRouter')
 const productRouter = require('./Routes/productRouter')
 
-<<<<<<< HEAD
 app.use('/', homepageRouter)
 app.use('/user', userRouter)
 app.use('/admin', adminRouter)
 app.use('/home', productRouter)
-=======
-app.use('/',homepageRouter)
-app.use('/user',userRouter)
-app.use('/admin',adminRouter)
-app.use('/home',productRouter)
->>>>>>> 9fd6b2897473ecb78725e29151a2fbf5252745c3
 
 
 app.use((req, res, next) => {

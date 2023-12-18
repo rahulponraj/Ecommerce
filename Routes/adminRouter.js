@@ -59,7 +59,7 @@ router.post('/userStatus', userController.updateStatus)
 
 router.get('/orders', userController.loadOrdersList);
 
-router.get('/vieworders', userController.loadOrdersDateList);
+router.get('/vieworders', userController.loadOrdersDateList);  
 
 router.post('/orders/editOrderStatus', userController.editOrderStatus);
 

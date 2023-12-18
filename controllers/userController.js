@@ -66,21 +66,12 @@ const loadHomepage = async (req, res) => {
 
 
 
-<<<<<<< HEAD
 const loadLoginPage = (req, res) => {
   if (req.session.isAuth) {
     res.redirect('/')
   } else {
     res.render('userLogin')
   }
-=======
-const loadLoginPage=(req,res)=>{ 
- if(req.session.isAuth){
-  res.redirect('/')
- }else{
-  res.render('userLogin')
-}
->>>>>>> 9fd6b2897473ecb78725e29151a2fbf5252745c3
 }
 
 const tempstore = async (req, res) => {
@@ -806,16 +797,26 @@ const loadOrderExcel = async (req, res) => {
 
 const loadOrdersList = async (req, res) => {
   try {
+      const page = req.query.page || 1; // Get the page number from the query parameters (default to 1)
+      const itemsPerPage = 10; // Number of items to display per page
+      const startIndex = (page - 1) * itemsPerPage;
+      
+      const totalOrders = await Order.find({}).countDocuments();
+      const totalPages = Math.ceil(totalOrders / itemsPerPage);
 
-    const orders = await Order.find({}).sort({ createdAt: -1 }).populate('user');
+      const orders = await Order.find({})
+          .sort({ createdAt: -1 })
+          .skip(startIndex)
+          .limit(itemsPerPage)
+          .populate('user');
 
-    res.render('admin-orders', { orders });
-
+      res.render('admin-orders', { orders, currentPage: page, totalPages });
 
   } catch (error) {
-    console.log(error.message);
+      console.log(error.message);
   }
 }
+
 
 const loadOrdersDateList = async (req, res) => {
   try {

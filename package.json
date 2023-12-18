@@ -32,5 +32,8 @@
     "session": "^0.1.0",
     "static": "^2.0.0",
     "twilio": "^4.13.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
   }
 }
