@@ -15,12 +15,12 @@ const TempSchema = mongoose.Schema(
     },
     mobile: {
       type: String,
-      required: false, 
+      required: false,
     },
     password: {
       type: String,
       required: true,
     },
-}
+  }
 )
 module.exports = mongoose.model("TempData", TempSchema);

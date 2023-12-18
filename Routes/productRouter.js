@@ -1,57 +1,53 @@
 const { Router } = require('express');
 const router = Router();
-const productController=require('../controllers/productController');
-const cartController=require('../controllers/cartController');
-const autMiddleware=require('../controllers/authMiddleware')
-const paymentController=require('../controllers/paymentController')
-const userController=require('../controllers/userController')
+const productController = require('../controllers/productController');
+const cartController = require('../controllers/cartController');
+const autMiddleware = require('../controllers/authMiddleware')
+const paymentController = require('../controllers/paymentController')
+const userController = require('../controllers/userController')
 
 
-router.get('/singleProduct',productController.showSingleProduct)
+router.get('/singleProduct', productController.showSingleProduct)
 
-router.get('/',productController.listProducts) 
+router.get('/', productController.listProducts)
 
-router.post("/singleProduct/addToCart",autMiddleware.isLoggedIn,cartController.addToCart);
+router.post("/singleProduct/addToCart", autMiddleware.isLoggedIn, cartController.addToCart);
 
-router.post("/singleProduct/addToWishlist",cartController.addToWishlist);
+router.post("/singleProduct/addToWishlist", cartController.addToWishlist);
 
-router.get('/cart',autMiddleware.isLoggedIn,cartController.loadCart);
+router.get('/cart', autMiddleware.isLoggedIn, cartController.loadCart);
 
-router.get('/wishlist',autMiddleware.isLoggedIn,userController.loadWishlist);   
+router.get('/wishlist', autMiddleware.isLoggedIn, userController.loadWishlist);
 
-router.post('/cart/changeQuantity',autMiddleware.isLoggedIn,cartController.changeQuantity);
+router.post('/cart/changeQuantity', autMiddleware.isLoggedIn, cartController.changeQuantity);
 
-router.get('/cart/changeSize',cartController.changeSize);
+router.get('/cart/changeSize', cartController.changeSize);
 
-router.get('/cart/remove',cartController.removeFromCart);
+router.get('/cart/remove', cartController.removeFromCart);
 
-router.get('/cart/wishlist',cartController.addToWishlistFromCart);
+router.get('/cart/wishlist', cartController.addToWishlistFromCart);
 
-router.get('/cart/selectaddress',autMiddleware.isLoggedIn,cartController.loadSelectAdress);
+router.get('/cart/selectaddress', autMiddleware.isLoggedIn, cartController.loadSelectAdress);
 
-router.post('/cart/changeaddress',cartController.updateAddressIndex);
+router.post('/cart/changeaddress', cartController.updateAddressIndex);
 
-router.get('/cart/proceedPayment',autMiddleware.isLoggedIn,cartController.loadProceedPayment);
+router.get('/cart/proceedPayment', autMiddleware.isLoggedIn, cartController.loadProceedPayment);
 
-router.get('/cart/proceedPayment/placeOrder',autMiddleware.isLoggedIn,cartController.placeOrder);
+router.get('/cart/proceedPayment/placeOrder', autMiddleware.isLoggedIn, cartController.placeOrder);
 
-router.post('/cart/proceedPayment/createRazorpayOrder',autMiddleware.isLoggedIn,paymentController.createRazorpayOrder);
+router.post('/cart/proceedPayment/createRazorpayOrder', autMiddleware.isLoggedIn, paymentController.createRazorpayOrder);
 
-router.post('/cart/proceedPayment/verifyPayment',autMiddleware.isLoggedIn,paymentController.verifyPayment);
+router.post('/cart/proceedPayment/verifyPayment', autMiddleware.isLoggedIn, paymentController.verifyPayment);
 
-router.post('/cart/validate-coupon',cartController.verifyCoupon);
+router.post('/cart/validate-coupon', cartController.verifyCoupon);
 
+router.post('/wishlist/moveToCart', autMiddleware.isLoggedIn, cartController.moveToCart);
 
+router.post('/wishlist/removeFromWishlist', autMiddleware.isLoggedIn, cartController.removeFromWishlist);
 
-router.post('/wishlist/moveToCart',autMiddleware.isLoggedIn,cartController.moveToCart);
+router.post('/filterProducts', productController.filterProducts)
 
-router.post('/wishlist/removeFromWishlist',autMiddleware.isLoggedIn,cartController.removeFromWishlist);
-
-
-
-router.post('/filterProducts',productController.filterProducts)
-
-router.post('/search',productController.searchProduct)
+router.post('/search', productController.searchProduct)
 
 
-module.exports=router
+module.exports = router

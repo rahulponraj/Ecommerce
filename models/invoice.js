@@ -1,4 +1,4 @@
-const customTemplate=`<html>
+const customTemplate = `<html>
     <head>
     <!--    <link rel="stylesheet" type="text/css" href="style.css">-->
     </head>
@@ -303,4 +303,4 @@ const customTemplate=`<html>
     </html>
     `
 
-    module.exports=customTemplate
+module.exports = customTemplate

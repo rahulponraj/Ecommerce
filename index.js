@@ -12,33 +12,40 @@ const orderid = require('order-id')('key');
 db.connect();
 
 app.use(logger('dev'));
-app.use(express.urlencoded({ extended: true })); 
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(express.static('public'));   
+app.use(express.static('public'));
 app.set('view engine', 'ejs');
-app.set('views', './views');  
+app.set('views', './views');
 
 
-  
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge:1200000}
+  cookie: { maxAge: 1200000 }
 }));
 
 
-const homepageRouter=require('./Routes/homepageRouter');
-const userRouter=require('./Routes/userRouter')
-const adminRouter=require('./Routes/adminRouter')
-const productRouter=require('./Routes/productRouter')
+const homepageRouter = require('./Routes/homepageRouter');
+const userRouter = require('./Routes/userRouter')
+const adminRouter = require('./Routes/adminRouter')
+const productRouter = require('./Routes/productRouter')
 
+<<<<<<< HEAD
+app.use('/', homepageRouter)
+app.use('/user', userRouter)
+app.use('/admin', adminRouter)
+app.use('/home', productRouter)
+=======
 app.use('/',homepageRouter)
 app.use('/user',userRouter)
 app.use('/admin',adminRouter)
 app.use('/home',productRouter)
+>>>>>>> 9fd6b2897473ecb78725e29151a2fbf5252745c3
 
 
 app.use((req, res, next) => {

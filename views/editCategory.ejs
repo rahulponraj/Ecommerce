@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-   
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/edit-category.css">
 
 </head>
+
 <body>
     <div class="admin-panel">
         <div class="sidebar">
@@ -45,33 +47,35 @@
                     <form class="signup-form" id="signup-form-v" method="post" action="/admin/editCategory">
                         <h3>Edit Category</h3>
                         <div class="coupon-label">Category</div>
-                        <% if (typeof category !== 'undefined') { %>
-                            <input id="category" type="text" name="category" value="<%= category.category %>" placeholder="<%= category.category %>">
+                        <% if (typeof category !=='undefined' ) { %>
+                            <input id="category" type="text" name="category" value="<%= category.category %>"
+                                placeholder="<%= category.category %>">
                             <div id="category-error" class="error-message"></div>
                             <div class="coupon-label">Status</div>
-                           
-                            <div >
+
+                            <div>
                                 <select class="dropdown" name="status">
-                                    <% if(category.status=="Active"){ %>
-                                  <option value="<%= category.status %>">Active</option>
-                                  <option value="Blocked">Block</option>
-                                  <% } 
-                                 else { %>
-                                 <option value="<%= category.status %>">Block</option>
-                                  <option value="Active">Unblock</option>
-                                <% } %>                              
-                            </select>
-                              </div>
-                           
-                        <% } %>
-                        <input type="hidden" name="id" value="<%= category._id %>" >
-                        <div class="signup-input"><button class="signup" type="submit">Save Changes</button></div>
+                                    <% if(category.status=="Active" ){ %>
+                                        <option value="<%= category.status %>">Active</option>
+                                        <option value="Blocked">Block</option>
+                                        <% } else { %>
+                                            <option value="<%= category.status %>">Block</option>
+                                            <option value="Active">Unblock</option>
+                                            <% } %>
+                                </select>
+                            </div>
+
+                            <% } %>
+                                <input type="hidden" name="id" value="<%= category._id %>">
+                                <div class="signup-input"><button class="signup" type="submit">Save Changes</button>
+                                </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-<script src="/javascript/editCategory-validation.js"></script>
+    <script src="/javascript/editCategory-validation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

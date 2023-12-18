@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    
+
     email: {
       type: String,
       required: true,
@@ -17,62 +17,62 @@ const userSchema = mongoose.Schema(
     },
     mobile: {
       type: String,
-      required: false, 
+      required: false,
     },
     password: {
       type: String,
       required: true,
     },
-    status:{
-      type:String,
-      default:"Active"
+    status: {
+      type: String,
+      default: "Active"
     },
-    address:[ {
-      name:{
-        type:String,    
-        default:function(){
-         return this.name
+    address: [{
+      name: {
+        type: String,
+        default: function () {
+          return this.name
         }
       },
-      mobile:{
-        type:Number,
-       
-        default: function(){
+      mobile: {
+        type: Number,
+
+        default: function () {
           return this.mobile
         }
       },
 
       locality: {
         type: String,
-        required: true, 
+        required: true,
       },
-      buildingName:{
-        type:String,
-        required:true
-      }, 
-      landmark:{
-        type:String,
-        required:true, 
+      buildingName: {
+        type: String,
+        required: true
+      },
+      landmark: {
+        type: String,
+        required: true,
       },
       city: {
         type: String,
-        required: true, 
+        required: true,
       },
       state: {
         type: String,
         required: true,
       },
       pincode: {
-        type: String, 
-        required: true, 
+        type: String,
+        required: true,
       },
-      addressType:{
-        type:String,
-        
+      addressType: {
+        type: String,
+
       },
-     
+
     },
-   ],
+    ],
     cart: [
       {
         product: {
@@ -83,36 +83,36 @@ const userSchema = mongoose.Schema(
           type: Number,
           default: 1,
         },
-        
-        },
-     
+
+      },
+
     ],
     wishlist: [
       {
         product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
         }
       },
     ],
     previousOrders: [
       {
-      orderNo:{
-        type:String
+        orderNo: {
+          type: String
 
+        }
       }
-    }
     ],
-    gender:{
-      type:String
+    gender: {
+      type: String
     },
-    wallet:{
-      type:Number,
-      default:0,
+    wallet: {
+      type: Number,
+      default: 0,
     },
     selectedAddressIndex: {
       type: Number,
-      default: 0, 
+      default: 0,
     },
   },
 

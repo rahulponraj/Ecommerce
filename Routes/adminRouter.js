@@ -1,71 +1,71 @@
 const { Router } = require('express');
 const router = Router();
-const userController=require('../controllers/userController');
-const productController=require('../controllers/productController');
-const categoryController=require('../controllers/categoryController');
-const adminController=require('../controllers/adminController');
-const adminAuthMiddleware=require('../controllers/adminAuth')
+const userController = require('../controllers/userController');
+const productController = require('../controllers/productController');
+const categoryController = require('../controllers/categoryController');
+const adminController = require('../controllers/adminController');
+const adminAuthMiddleware = require('../controllers/adminAuth')
 
 
-router.get('/',adminController.loadAdminLogin);
+router.get('/', adminController.loadAdminLogin);
 
-router.post('/login',adminController.verifyLogin);
+router.post('/login', adminController.verifyLogin);
 
-router.get('/logout',adminController.adminlogout)
+router.get('/logout', adminController.adminlogout)
 
-router.get('/verifyOtp',adminController.loadVerifyOtp)
+router.get('/verifyOtp', adminController.loadVerifyOtp)
 
-router.post('/verifyOtp',adminController.adminverifyOTP)
+router.post('/verifyOtp', adminController.adminverifyOTP)
 
-router.get('/dashboard',adminAuthMiddleware.adminLoggedOn,adminController.loadDashboard)
+router.get('/dashboard', adminAuthMiddleware.adminLoggedOn, adminController.loadDashboard)
 
-router.get('/categories',adminAuthMiddleware.adminLoggedOn,categoryController.loadListCategory)
+router.get('/categories', adminAuthMiddleware.adminLoggedOn, categoryController.loadListCategory)
 
-router.get('/addCategory',adminAuthMiddleware.adminLoggedOn,categoryController.loadAddCategory);
- 
-router.post('/addCategory',categoryController.addCategory);
+router.get('/addCategory', adminAuthMiddleware.adminLoggedOn, categoryController.loadAddCategory);
 
-router.get('/editCategory',adminAuthMiddleware.adminLoggedOn,categoryController.loadEditCategory);
+router.post('/addCategory', categoryController.addCategory);
 
-router.post('/editCategory',categoryController.updateCategory);
+router.get('/editCategory', adminAuthMiddleware.adminLoggedOn, categoryController.loadEditCategory);
 
-router.get('/deleteCategory',categoryController.deleteCategory);
+router.post('/editCategory', categoryController.updateCategory);
 
-router.get('/listProducts',adminAuthMiddleware.adminLoggedOn,productController.loadProductList);
+router.get('/deleteCategory', categoryController.deleteCategory);
 
-router.get('/editProduct',adminAuthMiddleware.adminLoggedOn,productController.loadEditproduct);
- 
-router.post('/editProduct',productController.uploadMultiple,productController.updateProduct);
+router.get('/listProducts', adminAuthMiddleware.adminLoggedOn, productController.loadProductList);
 
-router.post('/deleteImage',productController.deleteImage);
+router.get('/editProduct', adminAuthMiddleware.adminLoggedOn, productController.loadEditproduct);
 
-router.get('/deleteProduct',productController.deleteProduct);
+router.post('/editProduct', productController.uploadMultiple, productController.updateProduct);
 
-router.get('/addProduct',adminAuthMiddleware.adminLoggedOn,productController.loadAddProduct)
+router.post('/deleteImage', productController.deleteImage);
 
-router.post('/addProduct',productController.uploadMultiple,productController.saveProduct)
+router.get('/deleteProduct', productController.deleteProduct);
 
-router.get('/listUsers',adminAuthMiddleware.adminLoggedOn,userController.loadUserlist)
+router.get('/addProduct', adminAuthMiddleware.adminLoggedOn, productController.loadAddProduct)
 
-router.post('/editUser',userController.loadEditUser)
+router.post('/addProduct', productController.uploadMultiple, productController.saveProduct)
 
-router.post('/updateUser',userController.updateUser)
+router.get('/listUsers', adminAuthMiddleware.adminLoggedOn, userController.loadUserlist)
 
-router.get('/addUser',adminAuthMiddleware.adminLoggedOn,userController.loadAdduser)
+router.post('/editUser', userController.loadEditUser)
 
-router.post('/addUser',userController.saveUser)
+router.post('/updateUser', userController.updateUser)
 
-router.post('/userStatus',userController.updateStatus)
+router.get('/addUser', adminAuthMiddleware.adminLoggedOn, userController.loadAdduser)
 
-router.get('/orders',userController.loadOrdersList);
+router.post('/addUser', userController.saveUser)
 
-router.get('/vieworders',userController.loadOrdersDateList);
+router.post('/userStatus', userController.updateStatus)
+
+router.get('/orders', userController.loadOrdersList);
+
+router.get('/vieworders', userController.loadOrdersDateList);
 
 router.post('/orders/editOrderStatus', userController.editOrderStatus);
 
-router.get('/orders/orderView',adminAuthMiddleware.adminLoggedOn,userController.loadorderView)
+router.get('/orders/orderView', adminAuthMiddleware.adminLoggedOn, userController.loadorderView)
 
-router.get('/coupons',adminAuthMiddleware.adminLoggedOn, adminController.loadAdminCouponlist);
+router.get('/coupons', adminAuthMiddleware.adminLoggedOn, adminController.loadAdminCouponlist);
 
 router.post('/addCoupon', adminController.addCoupon);
 
@@ -75,7 +75,7 @@ router.get('/unblockCoupon', adminController.unblockCoupon);
 
 router.get('/deleteCoupon', adminController.deleteCoupon);
 
-router.get('/banners',adminAuthMiddleware.adminLoggedOn, adminController.loadBanners);
+router.get('/banners', adminAuthMiddleware.adminLoggedOn, adminController.loadBanners);
 
 router.post('/banners', adminController.uploadMultiple, adminController.saveBanner);
 
@@ -85,19 +85,19 @@ router.get('/activateBanner', adminController.activateBanner);
 
 router.get('/hideBanner', adminController.hideBanner);
 
-router.post('/salesReport',adminController.loadSalesReport);
+router.post('/salesReport', adminController.loadSalesReport);
 
-router.post('/monthlySales',adminController.loadmonthlySales);
+router.post('/monthlySales', adminController.loadmonthlySales);
 
-router.post('/chartType',adminController.loadDifferentCharts);
+router.post('/chartType', adminController.loadDifferentCharts);
 
-router.get('/listStock',productController.loadStockDetails);
+router.get('/listStock', productController.loadStockDetails);
 
-router.get('/downloadpdfreport',userController.loadOrderPdf);
+router.get('/downloadpdfreport', userController.loadOrderPdf);
 
-router.get('/downloadexcelreport',userController.loadOrderExcel);
+router.get('/downloadexcelreport', userController.loadOrderExcel);
 
 
-module.exports=router
+module.exports = router
 
 

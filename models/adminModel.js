@@ -11,12 +11,12 @@ const adminSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  mobile:{
-    type:String,
-    required:false
+  mobile: {
+    type: String,
+    required: false
   },
   createdAt: {
-    type: Date, 
+    type: Date,
     default: Date.now,
   },
 });

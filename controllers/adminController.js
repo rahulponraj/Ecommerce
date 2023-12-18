@@ -2,33 +2,33 @@ const multer = require('multer');
 const fs = require('fs');
 const session = require('express-session');
 const path = require('path');
-const Coupon=require('../models/couponModel') 
+const Coupon = require('../models/couponModel')
 const dotenv = require('dotenv');
 dotenv.config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken =  process.env.TWILIO_AUTH_TOKEN;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const phoneNumber = '8281179172';
 const client = require('twilio')(accountSid, authToken);
 const Admin = require('../models/adminModel');
 const { default: mongoose } = require('mongoose');
 const Banner = require('../models/bannerModel')
-const SalesReport=require('../models/salesReportModel')
+const SalesReport = require('../models/salesReportModel')
 
 
-const loadAdminLogin=(req,res)=>{
-  if(req.session.isAdminAuth){
+const loadAdminLogin = (req, res) => {
+  if (req.session.isAdminAuth) {
     res.redirect('/dashboard')
-  }else{
-  res.render('adminLogin')
-}
+  } else {
+    res.render('adminLogin')
+  }
 }
 
-const loadVerifyOtp=(req,res)=>{
+const loadVerifyOtp = (req, res) => {
   res.render('adminVerify')
 }
 
-const loadDashboard=async (req,res)=>{
-  const yearlySales=await SalesReport.aggregate([
+const loadDashboard = async (req, res) => {
+  const yearlySales = await SalesReport.aggregate([
     {
       $group: {
         _id: { $year: "$date" },
@@ -38,50 +38,50 @@ const loadDashboard=async (req,res)=>{
       }
     }
   ])
- 
-  res.render('adminDashboard',{yearlySales})
-}
-const loadmonthlySales=async(req,res)=>{
 
-  const selectedYear = req.body.selectedYear; 
-  try{
-  const monthlySales = await SalesReport.aggregate([
-    {
-      $match: {
-        date: {
-          $gte: new Date(selectedYear, 0, 1), // Start of the selected year
-          $lt: new Date(selectedYear + 1, 0, 1) // Start of the next year
+  res.render('adminDashboard', { yearlySales })
+}
+const loadmonthlySales = async (req, res) => {
+
+  const selectedYear = req.body.selectedYear;
+  try {
+    const monthlySales = await SalesReport.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date(selectedYear, 0, 1), // Start of the selected year
+            $lt: new Date(selectedYear + 1, 0, 1) // Start of the next year
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { month: { $month: "$date" } },
+          totalSales: { $sum: "$totalSales" },
+          totalProductCount: { $sum: "$productCount" },
+          totalOrderCount: { $sum: "$orderCount" }
+        }
+      },
+      {
+        $sort: {
+          "_id.month": 1
         }
       }
-    },
-    {
-      $group: {
-        _id: { month: { $month: "$date" } },
-        totalSales: { $sum: "$totalSales" },
-        totalProductCount: { $sum: "$productCount" },
-        totalOrderCount: { $sum: "$orderCount" }
-      }
-    },
-    {
-      $sort: {
-        "_id.month": 1
-      }
-    }
-  ]);
-  
- res.json({success:true,monthlySales})
+    ]);
+
+    res.json({ success: true, monthlySales })
 
 
-}catch(error){
-  res.json({success:false,message:"COULDN'T LOAD REPORT"})
-  console.log(error.message);
-}
+  } catch (error) {
+    res.json({ success: false, message: "COULDN'T LOAD REPORT" })
+    console.log(error.message);
+  }
 
 
 }
 
 
-const adminlogout=(req,res)=>{
+const adminlogout = (req, res) => {
   req.session.destroy();
   res.redirect('/admin')
 }
@@ -91,21 +91,21 @@ let OTPassword;
 
 sendOTP = (phoneNumber, res) => {
 
-  
+
   OTPassword = generateOTP();
   client.messages
     .create({
       body: `Your OTP for login COSTa is: ${OTPassword}`,
-      from: '+16676604699', 
+      from: '+16676604699',
       to: phoneNumber
     })
     .then(message => {
-   
+
       res.redirect('/verifyotp');
     })
     .catch(error => {
       console.error(error.message)
-     
+
     });
 }
 
@@ -118,13 +118,13 @@ const generateOTP = () => {
   return OTP;
 }
 
-verifyOTP = (req,res) => {
-   let receivedOTP=req.body.otp
+verifyOTP = (req, res) => {
+  let receivedOTP = req.body.otp
   if (receivedOTP === OTPassword) {
-      userController.insertUser
-     
+    userController.insertUser
+
   } else {
-      res.redirect('/error-page'); 
+    res.redirect('/error-page');
   }
 }
 
@@ -140,27 +140,27 @@ const adminSendOTP = (phoneNumber, res) => {
       to: phoneNumber
     })
     .then(message => {
-   
+
       res.redirect('/admin/verifyOtp');
     })
     .catch(error => {
       console.error(error.message)
-     
+
     });
 }
 
 
 
 
-const adminverifyOTP = (req,res) => {
-  let receivedOTP=req.body.otp
- if (receivedOTP === AdminOtp) {
-  req.session.admin=receivedOTP
-     res.redirect('/admin/dashboard')
-    
- } else {
-     res.render("adminVerify",{message:"Invalid OTP"}); 
- }
+const adminverifyOTP = (req, res) => {
+  let receivedOTP = req.body.otp
+  if (receivedOTP === AdminOtp) {
+    req.session.admin = receivedOTP
+    res.redirect('/admin/dashboard')
+
+  } else {
+    res.render("adminVerify", { message: "Invalid OTP" });
+  }
 
 }
 
@@ -169,92 +169,91 @@ const adminverifyOTP = (req,res) => {
 
 
 
-const verifyLogin = async (req,res) => {
+const verifyLogin = async (req, res) => {
 
   try {
     const username = req.body.username;
     const password = req.body.password;
 
-    const admindata = await Admin.findOne({username: username});
-  
+    const admindata = await Admin.findOne({ username: username });
+
     if (admindata) {
-      if(password===admindata.password)
-      {
-        const phoneNumber=admindata.mobile
-        adminSendOTP(phoneNumber,res)
+      if (password === admindata.password) {
+        const phoneNumber = admindata.mobile
+        adminSendOTP(phoneNumber, res)
         req.session.isAdminAuth = "true"
       } else {
-       
+
         res.render('adminLogin', { message: 'Incorrect password' });
       }
-      }
-      else {
-      
+    }
+    else {
+
       res.render('adminLogin', { message: 'Username not found' });
     }
   } catch (error) {
     console.log(error.message);
-    
+
   }
 };
 
-const loadAdminCouponlist =async(req, res) => {
- 
-  const coupons=await Coupon.find({})
-  res.render("admin-coupons",{coupons})
+const loadAdminCouponlist = async (req, res) => {
+
+  const coupons = await Coupon.find({})
+  res.render("admin-coupons", { coupons })
 }
 
-const addCoupon=async(req,res)=>{
+const addCoupon = async (req, res) => {
 
-  const{code,percentage,minpurchase,expiry}=req.body
-  
-  const exist=await Coupon.findOne({code:code});
+  const { code, percentage, minpurchase, expiry } = req.body
 
-  if(exist){
-   return  res.json({success:false,message:"Coupon Code Exists!"})
+  const exist = await Coupon.findOne({ code: code });
+
+  if (exist) {
+    return res.json({ success: false, message: "Coupon Code Exists!" })
   }
-else{
-   const coupon= Coupon({
-      code:code,
-      percentage:percentage,
-      minpurchase:minpurchase,
-      expiry:expiry, 
+  else {
+    const coupon = Coupon({
+      code: code,
+      percentage: percentage,
+      minpurchase: minpurchase,
+      expiry: expiry,
 
-   });
- 
-   await coupon.save();
-   res.json({success:true})
+    });
+
+    await coupon.save();
+    res.json({ success: true })
   }
 }
 
-const blockCoupon=async(req,res)=>{
-const couponId=req.query.couponId
-await Coupon.updateOne({_id:new mongoose.Types.ObjectId(couponId)},{$set:{status:"Blocked"}})
-res.redirect("/admin/coupons")
+const blockCoupon = async (req, res) => {
+  const couponId = req.query.couponId
+  await Coupon.updateOne({ _id: new mongoose.Types.ObjectId(couponId) }, { $set: { status: "Blocked" } })
+  res.redirect("/admin/coupons")
 }
 
-const unblockCoupon=async(req,res)=>{
-  const couponId=req.query.couponId
-  await Coupon.updateOne({_id:new mongoose.Types.ObjectId(couponId)},{$set:{status:"Active"}})
-  
+const unblockCoupon = async (req, res) => {
+  const couponId = req.query.couponId
+  await Coupon.updateOne({ _id: new mongoose.Types.ObjectId(couponId) }, { $set: { status: "Active" } })
+
   res.redirect("/admin/coupons")
 
 }
 
-const deleteCoupon=async(req,res)=>{
-  const couponId=req.query.couponId
-  await Coupon.findByIdAndDelete({_id:new mongoose.Types.ObjectId(couponId)})
+const deleteCoupon = async (req, res) => {
+  const couponId = req.query.couponId
+  await Coupon.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(couponId) })
   res.redirect("/admin/coupons")
 
 }
 
-const loadBanners =async (req, res) => {
-  const banners= await Banner.find({}).sort({createdAt:-1})
- 
-   res.render("admin-banners",{banners})
- }
+const loadBanners = async (req, res) => {
+  const banners = await Banner.find({}).sort({ createdAt: -1 })
 
- const fileStorageEngine = multer.diskStorage({
+  res.render("admin-banners", { banners })
+}
+
+const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = './banners';
     if (!fs.existsSync(dir)) {
@@ -273,7 +272,7 @@ const uploadMultiple = upload.array("images", 4);
 
 const saveBanner = async (req, res) => {
   try {
-    const files = req.files; 
+    const files = req.files;
 
     for (const file of files) {
       const image = {
@@ -297,29 +296,29 @@ const saveBanner = async (req, res) => {
 };
 
 
-const deleteBanner=async(req,res)=>{
-  const bannerId=req.query.bannerId
+const deleteBanner = async (req, res) => {
+  const bannerId = req.query.bannerId
 
-   await Banner.findByIdAndDelete(bannerId)
-   res.redirect('/admin/banners')
+  await Banner.findByIdAndDelete(bannerId)
+  res.redirect('/admin/banners')
 
 
 }
 
 
-const activateBanner=async(req,res)=>{
-  const bannerId=req.query.bannerId;
- 
-  await Banner.updateOne({_id:new mongoose.Types.ObjectId(bannerId)},{$set:{status:"display"}})
+const activateBanner = async (req, res) => {
+  const bannerId = req.query.bannerId;
+
+  await Banner.updateOne({ _id: new mongoose.Types.ObjectId(bannerId) }, { $set: { status: "display" } })
   res.redirect('/admin/banners')
 
 }
 
 
-  const  hideBanner=async(req,res)=>{
-  const bannerId=req.query.bannerId;
- 
-  await Banner.updateOne({_id:new mongoose.Types.ObjectId(bannerId)},{$set:{status:"hidden"}})
+const hideBanner = async (req, res) => {
+  const bannerId = req.query.bannerId;
+
+  await Banner.updateOne({ _id: new mongoose.Types.ObjectId(bannerId) }, { $set: { status: "hidden" } })
   res.redirect('/admin/banners')
 
 }
@@ -330,62 +329,62 @@ const loadSalesReport = async (req, res) => {
     const endDate = Date.parse(req.body.endDate)
 
 
-  
 
-      const salesReports = await SalesReport.find({
-          date: { $gte: new Date(startDate), $lte: new Date(endDate) }
-      });
 
-      res.status(200).json({ message: 'Sales report loaded successfully', salesReports });
+    const salesReports = await SalesReport.find({
+      date: { $gte: new Date(startDate), $lte: new Date(endDate) }
+    });
+
+    res.status(200).json({ message: 'Sales report loaded successfully', salesReports });
   } catch (error) {
-      console.error('Error loading sales report:', error);
-      res.status(500).json({ error: 'An error occurred while loading sales report' });
+    console.error('Error loading sales report:', error);
+    res.status(500).json({ error: 'An error occurred while loading sales report' });
   }
 };
 
 const loadDifferentCharts = async (req, res) => {
 
   try {
-  
-      const {selectedChart,selectedYear} = req.body
 
-      if (selectedChart === "yearly") {
-          
-         const yearlyData= await createYearlyChart()
-          res.json({ success: true, yearlyData }); 
-      }
+    const { selectedChart, selectedYear } = req.body
 
-     else if(selectedChart === "monthly"){
+    if (selectedChart === "yearly") {
 
-      const monthlyData= await createMonthlyChart(selectedYear)
-      res.json({ success: true, monthlyData }); 
-     }
-    
+      const yearlyData = await createYearlyChart()
+      res.json({ success: true, yearlyData });
+    }
+
+    else if (selectedChart === "monthly") {
+
+      const monthlyData = await createMonthlyChart(selectedYear)
+      res.json({ success: true, monthlyData });
+    }
+
 
 
   } catch (error) {
-      console.log(error.message);
-      res.json({ success: false });
+    console.log(error.message);
+    res.json({ success: false });
   }
 }
 
 
-const createYearlyChart=async()=>{
+const createYearlyChart = async () => {
   const yearlyData = await SalesReport.aggregate([
     {
-        $group: {
-            _id: { $year: "$date" },
-            totalSales: { $sum: "$totalSales" },
-            productCount: { $sum: "$productCount" },
-            orderCount: { $sum: "$orderCount" }
-        }
+      $group: {
+        _id: { $year: "$date" },
+        totalSales: { $sum: "$totalSales" },
+        productCount: { $sum: "$productCount" },
+        orderCount: { $sum: "$orderCount" }
+      }
     },
     {
-        $sort: { _id: 1 } // Sort by year in ascending order
+      $sort: { _id: 1 } // Sort by year in ascending order
     }
-]);
+  ]);
 
-return yearlyData
+  return yearlyData
 }
 
 const createMonthlyChart = async (selectedYear) => {
@@ -394,7 +393,7 @@ const createMonthlyChart = async (selectedYear) => {
     {
       $match: {
         $expr: {
-          $eq: [{ $year: "$date" },parseInt(selectedYear, 10)]
+          $eq: [{ $year: "$date" }, parseInt(selectedYear, 10)]
         }
       }
     },
@@ -418,9 +417,9 @@ const createMonthlyChart = async (selectedYear) => {
 };
 
 
- 
 
-module.exports={
+
+module.exports = {
   verifyLogin,
   loadAdminLogin,
   adminverifyOTP,
@@ -441,6 +440,6 @@ module.exports={
   loadSalesReport,
   loadmonthlySales,
   loadDifferentCharts
- 
+
 
 }

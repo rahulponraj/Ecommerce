@@ -1,77 +1,77 @@
-const Product=require('../models/productModel');
+const Product = require('../models/productModel');
 var fs = require('fs');
 var path = require('path');
-const Category=require('../models/categoryModel')
+const Category = require('../models/categoryModel')
 const { default: mongoose } = require('mongoose');
 const multer = require('multer');
 
-const loadProductList=async(req,res)=>{
+const loadProductList = async (req, res) => {
 
-  try{
-  const products=await Product.find({}).populate('category')
- 
-      res.render('admin-product',{products})
-  }catch(error){
+  try {
+    const products = await Product.find({}).populate('category')
+
+    res.render('admin-product', { products })
+  } catch (error) {
     console.log(error);
   }
- 
-}
-
-const showSingleProduct=async(req,res)=>{
-  const id =req.query.id;
- 
-const product=await Product.find({_id:new mongoose.Types.ObjectId(id)})
-if(req.session.isAuth){
-  isLogedIn="true";
-}else{
-  isLogedIn="false";
-}
-    res.render('singleProduct',{product,isLogedIn})
 
 }
 
-const listProducts=async(req,res)=>{
-   const For=req.query.For
-   if(req.session.isAuth){
-    isLogedIn="true";
-  }else{
-    isLogedIn="false";
+const showSingleProduct = async (req, res) => {
+  const id = req.query.id;
+
+  const product = await Product.find({ _id: new mongoose.Types.ObjectId(id) })
+  if (req.session.isAuth) {
+    isLogedIn = "true";
+  } else {
+    isLogedIn = "false";
   }
-  try{
-      const product=await Product.find({For:For,status:"Active"})
-      const category=await Category.find({status:"Active"})
-      res.render('list-products',{product,category,isLogedIn})
-   }catch(error){
-       console.log(error)
-   }
+  res.render('singleProduct', { product, isLogedIn })
+
 }
 
-
-const loadEditproduct=async(req,res)=>{
- try{
-  const id =req.query.id;
-  const product=await Product.findOne({_id:new mongoose.Types.ObjectId(id)})
-  const category=await Category.find({status:"Active"})
- 
-  res.render('edit-product',{product,category})
-}catch(error){
-  console.log();
-}
-}
-
-const deleteProduct=async(req,res)=>{
-  const {id,status}=req.query.id
-  try{
-  await Product.deleteOne({_id:new mongoose.Types.ObjectId(id)},{$set:{status:status}})
-  res.redirect('/admin/listProducts')
-  }catch(error){
-      log(error.message)
+const listProducts = async (req, res) => {
+  const For = req.query.For
+  if (req.session.isAuth) {
+    isLogedIn = "true";
+  } else {
+    isLogedIn = "false";
+  }
+  try {
+    const product = await Product.find({ For: For, status: "Active" })
+    const category = await Category.find({ status: "Active" })
+    res.render('list-products', { product, category, isLogedIn })
+  } catch (error) {
+    console.log(error)
   }
 }
 
-const loadAddProduct=async(req,res)=>{
-  const category=await Category.find({status:"Active"})
-  res.render('admin-add-product',{category});
+
+const loadEditproduct = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const product = await Product.findOne({ _id: new mongoose.Types.ObjectId(id) })
+    const category = await Category.find({ status: "Active" })
+
+    res.render('edit-product', { product, category })
+  } catch (error) {
+    console.log();
+  }
+}
+
+const deleteProduct = async (req, res) => {
+  const { id, status } = req.query.id
+  try {
+    await Product.deleteOne({ _id: new mongoose.Types.ObjectId(id) }, { $set: { status: status } })
+    res.redirect('/admin/listProducts')
+  } catch (error) {
+    log(error.message)
+  }
+}
+
+const loadAddProduct = async (req, res) => {
+  const category = await Category.find({ status: "Active" })
+  res.render('admin-add-product', { category });
 }
 
 
@@ -92,14 +92,14 @@ const upload = multer({ storage: fileStorageEngine });
 const uploadMultiple = upload.array("images", 4);
 
 
-const saveProduct = async (req,res) => {
+const saveProduct = async (req, res) => {
   // console.log(req.body);
   try {
     const { title, description, category, price, size, saleprice, For, color, stock, brand } = req.body;
 
     const images = req.files.map((file) => {
       return {
-        data:  fs.readFileSync(path.join(__dirname, '..', 'images', file.filename)),
+        data: fs.readFileSync(path.join(__dirname, '..', 'images', file.filename)),
         contentType: file.mimetype,
       };
     });
@@ -128,11 +128,11 @@ const saveProduct = async (req,res) => {
 }
 
 
-const updateProduct=async(req,res)=>{
+const updateProduct = async (req, res) => {
   try {
-  
-    const { title, description,For,price,saleprice, stock,size,category,brand,quantity,color,id} = req.body;
-    let Updatedstock=Number(stock)
+
+    const { title, description, For, price, saleprice, stock, size, category, brand, quantity, color, id } = req.body;
+    let Updatedstock = Number(stock)
     const productId = new mongoose.Types.ObjectId(id);
     let product = await Product.findById(productId);
 
@@ -142,27 +142,27 @@ const updateProduct=async(req,res)=>{
 
     product.title = title;
     product.description = description;
-    product.For=For;
+    product.For = For;
     product.price = price;
     product.saleprice = saleprice;
     product.stock = Updatedstock;
-    product.size=size;
-    product.color=color;
-    product.brand=brand;
-    product.category=category
+    product.size = size;
+    product.color = color;
+    product.brand = brand;
+    product.category = category
 
-     // Handle image deletion
-     if (req.body.deletedImages && Array.isArray(req.body.deletedImages)) {
+    // Handle image deletion
+    if (req.body.deletedImages && Array.isArray(req.body.deletedImages)) {
       // Get the indices of images to delete
       const deletedIndices = req.body.deletedImages.map((index) => parseInt(index));
 
       // Remove the images at the specified indices
       product.images = product.images.filter((image, index) => !deletedIndices.includes(index));
     }
-   
+
     if (req.files && req.files.length > 0) {
-     
-    
+
+
       const newImages = req.files.map((file) => {
         return {
           data: fs.readFileSync(path.join(__dirname, '..', 'images', file.filename)),
@@ -172,14 +172,14 @@ const updateProduct=async(req,res)=>{
 
       // Append new images to the beginning of the image array
       product.images = newImages.concat(product.images);
-    // Remove any extra images beyond a certain limit (e.g., keep only the first 4 images)
-    const maxImages = 4;
-    if (product.images.length > maxImages) {
-      product.images = product.images.slice(0, maxImages);
+      // Remove any extra images beyond a certain limit (e.g., keep only the first 4 images)
+      const maxImages = 4;
+      if (product.images.length > maxImages) {
+        product.images = product.images.slice(0, maxImages);
+      }
     }
-  }
 
-  await product.save();
+    await product.save();
 
     res.redirect('/admin/listProducts');
   } catch (error) {
@@ -188,7 +188,7 @@ const updateProduct=async(req,res)=>{
   }
 }
 
-const filterProducts=async(req,res)=>{
+const filterProducts = async (req, res) => {
   try {
 
     const { price, suitableFor, categorys, discount } = req.body;
@@ -199,7 +199,7 @@ const filterProducts=async(req,res)=>{
           calculatedDiscount: {
             $subtract: [
               100,
-              { $multiply: [ { $divide: [ "$saleprice", "$price" ] }, 100 ] }
+              { $multiply: [{ $divide: ["$saleprice", "$price"] }, 100] }
             ]
           }
         }
@@ -225,55 +225,55 @@ const filterProducts=async(req,res)=>{
       }
       // Add more stages to the pipeline as needed
     ];
-    
+
     const product = await Product.aggregate(pipeline);
 
-   
-  
-    if(req.session.isAuth){
-      isLogedIn="true";
-    }else{
-      isLogedIn="false";
+
+
+    if (req.session.isAuth) {
+      isLogedIn = "true";
+    } else {
+      isLogedIn = "false";
     }
-    const category=await Category.find({})
-    res.render('list-products',{product,isLogedIn,category})
+    const category = await Category.find({})
+    res.render('list-products', { product, isLogedIn, category })
   } catch (err) {
     console.error('Error performing aggregation:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-const searchProduct=async(req,res)=>{
+const searchProduct = async (req, res) => {
 
-const keyword=req.body.keyword
+  const keyword = req.body.keyword
 
 
-try {
-  const product = await Product.find({
-    $text: { $search: keyword },
-    status: "Active"
-  })
-  .populate("category")
-  .exec(); // Populate the category field if needed
-  
+  try {
+    const product = await Product.find({
+      $text: { $search: keyword },
+      status: "Active"
+    })
+      .populate("category")
+      .exec(); // Populate the category field if needed
 
-const category=await Category.find({})
-res.render('list-products',{category,product})
 
-} catch (error) {
-  throw new Error(error.message);
+    const category = await Category.find({})
+    res.render('list-products', { category, product })
+
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
-}
-const loadStockDetails=async(req,res)=>{
+const loadStockDetails = async (req, res) => {
 
-  try{
-  const products=await Product.find({}).populate('category')
- 
-      res.render('adminStockReport',{products})
-  }catch(error){
+  try {
+    const products = await Product.find({}).populate('category')
+
+    res.render('adminStockReport', { products })
+  } catch (error) {
     console.log(error);
   }
- 
+
 }
 const deleteImage = async (req, res) => {
   try {
@@ -300,7 +300,7 @@ const deleteImage = async (req, res) => {
 
 
 
-module.exports={
+module.exports = {
   loadProductList,
   loadEditproduct,
   updateProduct,
@@ -314,5 +314,5 @@ module.exports={
   searchProduct,
   loadStockDetails,
   deleteImage
-  
+
 }

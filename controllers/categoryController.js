@@ -1,15 +1,15 @@
 const { default: mongoose } = require('mongoose')
-const Category=require('../models/categoryModel')
+const Category = require('../models/categoryModel')
 
 
 
-const loadListCategory=async(req,res)=>{
-  const categories=await Category.find({})      
-   res.render('listCategories',{categories})
+const loadListCategory = async (req, res) => {
+  const categories = await Category.find({})
+  res.render('listCategories', { categories })
 }
 
-const loadAddCategory=(req,res)=>{
-res.render('addCategories')
+const loadAddCategory = (req, res) => {
+  res.render('addCategories')
 }
 
 
@@ -35,44 +35,44 @@ const addCategory = async (req, res) => {
 
 
 
-const loadEditCategory=async(req,res)=>{
-  const id =req.query.id;
-  try{
-  const category=await Category.findOne({_id:new mongoose.Types.ObjectId(id)})
- 
-  res.render('editCategory',{category})
-  }catch(error){
-      console.log(error.message);
+const loadEditCategory = async (req, res) => {
+  const id = req.query.id;
+  try {
+    const category = await Category.findOne({ _id: new mongoose.Types.ObjectId(id) })
+
+    res.render('editCategory', { category })
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
-const updateCategory=async(req,res)=>{ 
-  const{category,status,id}=req.body
-  try{
-  await Category.updateOne({_id:new mongoose.Types.ObjectId(id)},{$set:{category:category,status:status}})
+const updateCategory = async (req, res) => {
+  const { category, status, id } = req.body
+  try {
+    await Category.updateOne({ _id: new mongoose.Types.ObjectId(id) }, { $set: { category: category, status: status } })
 
-  res.redirect('/admin/categories')
-  }catch(error){
-      console.log(error.message);
+    res.redirect('/admin/categories')
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
-const deleteCategory=async(req,res)=>{
-  const id =req.query.id;
-  try{
-  await Category.deleteOne({_id:new mongoose.Types.ObjectId(id)})
+const deleteCategory = async (req, res) => {
+  const id = req.query.id;
+  try {
+    await Category.deleteOne({ _id: new mongoose.Types.ObjectId(id) })
 
-  res.redirect('/admin/categories')
-} catch(error){
-  console.log(error);
-}
+    res.redirect('/admin/categories')
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-module.exports={
-    loadListCategory,
-    loadAddCategory,
-    addCategory,
-    loadEditCategory,
-    updateCategory,
-    deleteCategory
+module.exports = {
+  loadListCategory,
+  loadAddCategory,
+  addCategory,
+  loadEditCategory,
+  updateCategory,
+  deleteCategory
 }

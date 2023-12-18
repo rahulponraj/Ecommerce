@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup-Ashion</title>
-   
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/user-signup.css">
     <link rel="stylesheet" href="/css1/style.css" type="text/css">
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="/css1/slicknav.min.css" type="text/css">
 
 </head>
+
 <body>
     <header class="header">
         <div class="container-fluid">
@@ -41,30 +43,28 @@
                                     <li><a href="/user/wallet">Wallet</a></li>
                                 </ul>
                             </li>
-                        
+
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <% if (typeof isLogedIn !=='undefined' && isLogedIn==="true"){ %> 
+                            <% if (typeof isLogedIn !=='undefined' && isLogedIn==="true" ){ %>
                                 <a class="nav-link" href="/user/logout">Logout</a>
-                                <% }
-                                else { %>
+                                <% } else { %>
                                     <a href="/user/login">Login</a>
                                     <a href="/user/signup">Register</a>
-                               <% } 
-                               %>
+                                    <% } %>
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="/home/wishlist"><span class="icon_heart_alt"></span>
-                               
-                            </a></li>
+
+                                </a></li>
                             <li><a href="/home/cart"><span class="icon_bag_alt"></span>
-                                
-                            </a></li>
+
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -80,29 +80,33 @@
             <form class="signup-form" id="signup-form-v" method="post" action="/user/signup">
                 <h1>A.F</h1>
                 <h3>Signup</h3>
-                <div class="errordata" >
-                    <% if (typeof errordata !== 'undefined') { %>
-                     
-                        <p style="color: rgba(208, 41, 12, 0.874);font-size:medium;"><%= errordata %></p>
-                    <% } %>
-                 </div>
-               
-               
+                <div class="errordata">
+                    <% if (typeof errordata !=='undefined' ) { %>
+
+                        <p style="color: rgba(208, 41, 12, 0.874);font-size:medium;">
+                            <%= errordata %>
+                        </p>
+                        <% } %>
+                </div>
+
+
                 <div class="signup-input"><input id="name" type="text" name="name" placeholder="Name"></div>
                 <div id="name-error" class="error-message"></div>
                 <div class="signup-input"><input id="email" type="text" name="email" placeholder="Email"></div>
                 <div id="email-error" class="error-message"></div>
-                <div class="signup-input"><input id="password" type="password" name="password" placeholder="Password"></div>
+                <div class="signup-input"><input id="password" type="password" name="password" placeholder="Password">
+                </div>
                 <div id="password-error" class="error-message"></div>
                 <button class="signup" type="submit">Signup</button>
                 <div class="login">Already have an account?<a href="/user/login" id="login-link">Login</a></div>
-               
-                
+
+
             </form>
         </div>
     </div>
-   
+
     <script src="/javascript/signup-validation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

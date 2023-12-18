@@ -74,21 +74,21 @@
                                     <li><a href="/user/wallet">Wallet</a></li>
                                 </ul>
                             </li>
-                        
+
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
-                       
+
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="/home/wishlist"><span class="icon_heart_alt"></span>
-                               
-                            </a></li>
+
+                                </a></li>
                             <li><a href="/home/cart"><span class="icon_bag_alt"></span>
-                                
-                            </a></li>
+
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                     aria-controls="Addresses">Addresses</a>
                 <a class="list-group-item list-group-item-action active" data-tab="orders" id="list-Orders-list"
                     data-toggle="list" href="/user/profileOrders" role="tab" aria-controls="Orders">Orders</a>
-                    <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
+                <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
                     data-toggle="list" href="/user/wallet" role="tab" aria-controls="Orders">Wallet</a>
                 <a class="list-group-item list-group-item-action" data-tab="logout" id="list-settings-list"
                     data-toggle="list" href="/user/logout" role="tab" aria-controls="settings">LogOut</a>
@@ -117,44 +117,54 @@
 
 
         </div>
-    
-    <div class="col-md-8">
-        <div class="rightDiv">
-            <h4>My Orders</h4>
-            <p>Track your open orders & view the summary of your past orders</p>
-            <% for (let i = 0; i < orders.length; i++) { %>
-                <% if (orders[i].cart.length > 0 && orders[i].cart[0].product) { %>
-                <div class="orderId">Order Id:<%= orders[i].orderId %></div>
-                <a  class="cardLink" href="/user/profileOrderDetails?orderId=<%= orders[i].orderId %>"><div class="order-card">
-                  
-                    <div class="image-card">
-                      
-                      <img class="img-fluid image" src="data:<%= orders[i].cart[0].product.images[0].contentType %>;base64,<%= orders[i].cart[0].product.images[0].data.toString('base64') %>">
-                    </div>
-                  <% } %>
-                  <div class="status">
-                    <% if (orders[i].status === "Cancelled") { %>
-                        <div  class="statusText" style="color: rgba(255, 0, 0, 0.523);"><%= orders[i].status %></div>
-                      <% } else { %>
-                        <div class="statusText"><%= orders[i].status %></div>
-                      <% } %>
-                 
-                    <div class="estimatedDelivery">Estimated Delivery Tue,18 Aug</div>
-                    <div class="paymentMode"><%= orders[i].paymentMode %></div>
-                  </div>
-                  <div class="arrow">
-                    <img src="/images/icons8-next-24.png">
-                  </div>
-                </div></a>
-              <% } %>
-              
+
+        <div class="col-md-8">
+            <div class="rightDiv">
+                <h4>My Orders</h4>
+                <p>Track your open orders & view the summary of your past orders</p>
+                <% for (let i=0; i < orders.length; i++) { %>
+                    <% if (orders[i].cart.length> 0 && orders[i].cart[0].product) { %>
+                        <div class="orderId">Order Id:<%= orders[i].orderId %>
+                        </div>
+                        <a class="cardLink" href="/user/profileOrderDetails?orderId=<%= orders[i].orderId %>">
+                            <div class="order-card">
+
+                                <div class="image-card">
+
+                                    <img class="img-fluid image"
+                                        src="data:<%= orders[i].cart[0].product.images[0].contentType %>;base64,<%= orders[i].cart[0].product.images[0].data.toString('base64') %>">
+                                </div>
+                                <% } %>
+                                    <div class="status">
+                                        <% if (orders[i].status==="Cancelled" ) { %>
+                                            <div class="statusText" style="color: rgba(255, 0, 0, 0.523);">
+                                                <%= orders[i].status %>
+                                            </div>
+                                            <% } else { %>
+                                                <div class="statusText">
+                                                    <%= orders[i].status %>
+                                                </div>
+                                                <% } %>
+
+                                                    <div class="estimatedDelivery">Estimated Delivery Tue,18 Aug</div>
+                                                    <div class="paymentMode">
+                                                        <%= orders[i].paymentMode %>
+                                                    </div>
+                                    </div>
+                                    <div class="arrow">
+                                        <img src="/images/icons8-next-24.png">
+                                    </div>
+                            </div>
+                        </a>
+                        <% } %>
+
+            </div>
         </div>
     </div>
-</div>
 
 
 
-   
+
 </body>
 
 <script>

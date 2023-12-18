@@ -12,20 +12,20 @@ const productSchema = mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true, 
+    required: true,
   },
   saleprice: {
     type: Number,
     required: true,
   },
-  stock:{
-    type:Number
+  stock: {
+    type: Number
   },
-  For:{
-    type:String
+  For: {
+    type: String
   },
-  size:{
-    type:String
+  size: {
+    type: String
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
@@ -48,9 +48,9 @@ const productSchema = mongoose.Schema({
   color: {
     type: String,
   },
-  status:{
-    type:String,
-    default:"Active"
+  status: {
+    type: String,
+    default: "Active"
   },
   rating: [
     {
@@ -61,13 +61,13 @@ const productSchema = mongoose.Schema({
       },
     },
   ],
-}, 
-{ timestamps: true });
+},
+  { timestamps: true });
 productSchema.index({
- 
+
   description: "text",
   brand: "text",
- For:"text"
+  For: "text"
 }),
 
-module.exports = mongoose.model("Product", productSchema);
+  module.exports = mongoose.model("Product", productSchema);

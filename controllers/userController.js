@@ -1,7 +1,7 @@
 const Users = require('../models/UserModel');
 const TempData = require('../models/tempModel');
-const Product=require('../models/productModel');
-const Order=require('../models/orderModel');
+const Product = require('../models/productModel');
+const Order = require('../models/orderModel');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -10,10 +10,10 @@ const { default: orderId } = require('order-id');
 const dotenv = require('dotenv');
 dotenv.config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken =  process.env.TWILIO_AUTH_TOKEN;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 const multer = require('multer');
-const customTemplate=require('../models/invoice')
+const customTemplate = require('../models/invoice')
 const Banner = require('../models/bannerModel')
 
 const easyinvoice = require('easyinvoice');
@@ -22,56 +22,65 @@ const PDFDocument = require('pdfkit');
 const ExcelJS = require('exceljs');
 
 
-const loadUserSignup=(req,res)=>{
- 
-  res.render('signup') 
+const loadUserSignup = (req, res) => {
+
+  res.render('signup')
 }
 
-const loadSendOtp=(req,res)=>{ 
+const loadSendOtp = (req, res) => {
 
   res.render('sendotp');
 }
 
-const loadVerifyOtp=(req,res)=>{
+const loadVerifyOtp = (req, res) => {
   res.render('verifyOtp');
 }
 
-const loadHomepage=async(req,res)=>{
+const loadHomepage = async (req, res) => {
   if (req.session.isAuth) {
     isLogedIn = "true";
   } else {
     isLogedIn = "false";
-  } 
- try{
-  
-    const women1=await Product.find({For:"Women"}).limit(4)
-    const women2=await Product.find({For:"Women"}).skip(4).limit(4)
-    
-    const men1=await Product.find({For:"Men"}).limit(4)
-    const men2=await Product.find({For:"Men"}).skip(4).limit(4)
-  
-    const kids1=await Product.find({For:"Kids"}).limit(4)
-    const kids2=await Product.find({For:"Kids"}).skip(4).limit(4)
+  }
+  try {
+
+    const women1 = await Product.find({ For: "Women" }).limit(4)
+    const women2 = await Product.find({ For: "Women" }).skip(4).limit(4)
+
+    const men1 = await Product.find({ For: "Men" }).limit(4)
+    const men2 = await Product.find({ For: "Men" }).skip(4).limit(4)
+
+    const kids1 = await Product.find({ For: "Kids" }).limit(4)
+    const kids2 = await Product.find({ For: "Kids" }).skip(4).limit(4)
     const banner = await Banner.find({ status: "display" })
-   
+
     // var session;
     // session=req.session;
-    res.render("costa",{women1,women2,men1,men2,kids1,kids2,isLogedIn,banner})
+    res.render("costa", { women1, women2, men1, men2, kids1, kids2, isLogedIn, banner })
 
-   }catch(error){
-     console.log(error.message);
-    }
- 
+  } catch (error) {
+    console.log(error.message);
+  }
+
 }
 
 
 
+<<<<<<< HEAD
+const loadLoginPage = (req, res) => {
+  if (req.session.isAuth) {
+    res.redirect('/')
+  } else {
+    res.render('userLogin')
+  }
+=======
 const loadLoginPage=(req,res)=>{ 
  if(req.session.isAuth){
   res.redirect('/')
  }else{
   res.render('userLogin')
 }
+>>>>>>> 9fd6b2897473ecb78725e29151a2fbf5252745c3
 }
 
 const tempstore = async (req, res) => {
@@ -97,7 +106,7 @@ const tempstore = async (req, res) => {
   }
 };
 
-const userLogout=(req,res)=>{
+const userLogout = (req, res) => {
   req.session.destroy();
   res.redirect('/user/login')
 }
@@ -125,9 +134,9 @@ const securePassword = async (password) => {
 let OTPassword;
 
 const sendOTP = async (req, res) => {
-  const phone=req.body.phone
-  const countryCode=req.body.countryCode
-  const mobile=countryCode+phone
+  const phone = req.body.phone
+  const countryCode = req.body.countryCode
+  const mobile = countryCode + phone
   console.log(mobile);
   const MobExist = await Users.findOne({ mobile: mobile });
 
@@ -186,7 +195,7 @@ const insertUser = async (req, res) => {
 
     req.session.userId = userdata._id
     req.session.isAuth = "true"
-    
+
     res.redirect('/user/homepage');
   } catch (error) {
     console.log(error.message);
@@ -223,84 +232,84 @@ const verifyLogin = async (req, res) => {
   }
 };
 
-const loadUserlist=async(req,res)=>{
-  const users=await Users.find({})
+const loadUserlist = async (req, res) => {
+  const users = await Users.find({})
 
-  res.render('admin-customers',{users})
+  res.render('admin-customers', { users })
 }
 
-const loadAdduser=async(req,res)=>{
+const loadAdduser = async (req, res) => {
   res.render('addUser')
 }
 
-const saveUser=async(req,res)=>{
-  const{firstname,email,mobile,password}=req.body
-  try{
-  const spassword= await securePassword(password)
-  
-  const user=new Users({
-          firstname:firstname,
-          email:email,
-          mobile:mobile,
-          password:spassword
-  })
-  await user.save() 
-  res.redirect('/admin/listUsers')
-  }catch(error){
-          console.log(error);
-  } 
+const saveUser = async (req, res) => {
+  const { firstname, email, mobile, password } = req.body
+  try {
+    const spassword = await securePassword(password)
+
+    const user = new Users({
+      firstname: firstname,
+      email: email,
+      mobile: mobile,
+      password: spassword
+    })
+    await user.save()
+    res.redirect('/admin/listUsers')
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
-const loadEditUser=async(req,res)=>{
-  const id=req.session.userId
+const loadEditUser = async (req, res) => {
+  const id = req.session.userId
   //console.log(id);
-  const user=await Users.findOne({_id:new mongoose.Types.ObjectId(id)})
-   
-  res.render('editUser',{user})
+  const user = await Users.findOne({ _id: new mongoose.Types.ObjectId(id) })
+
+  res.render('editUser', { user })
 }
 
-const updateUser=async(req,res)=>{
-  const{firstname,email,mobile,password,id}=req.body
-    console.log(password);
-     const spassword=await securePassword(password)
-     console.log(spassword);
+const updateUser = async (req, res) => {
+  const { firstname, email, mobile, password, id } = req.body
+  console.log(password);
+  const spassword = await securePassword(password)
+  console.log(spassword);
 
-      await Users.updateOne({_id:new mongoose.Types.ObjectId(id)},
-      {$set:{firstname:firstname,email:email,mobile:mobile,password:spassword}})
+  await Users.updateOne({ _id: new mongoose.Types.ObjectId(id) },
+    { $set: { firstname: firstname, email: email, mobile: mobile, password: spassword } })
 
 
-      res.redirect("/admin/listUsers")
+  res.redirect("/admin/listUsers")
 }
-const updateStatus=async(req,res)=>{
-  const{id,status}=req.body
+const updateStatus = async (req, res) => {
+  const { id, status } = req.body
 
-  await Users.updateOne({_id:new mongoose.Types.ObjectId(id)},
-     {$set:{status:status}})
+  await Users.updateOne({ _id: new mongoose.Types.ObjectId(id) },
+    { $set: { status: status } })
 
-     if (status === 'Blocked') {
-      // Destroy the user's session
-      req.session.destroy((err) => {
-        if (err) {
-          console.error('Error destroying session:', err);
-        }
-        // Redirect to the listUsers page or any other appropriate action
-        res.redirect("/admin/listUsers");
-      });
-    } else {
-      // If the status is not blocked, simply redirect to the listUsers page
+  if (status === 'Blocked') {
+    // Destroy the user's session
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+      }
+      // Redirect to the listUsers page or any other appropriate action
       res.redirect("/admin/listUsers");
-    }
-    
+    });
+  } else {
+    // If the status is not blocked, simply redirect to the listUsers page
+    res.redirect("/admin/listUsers");
+  }
+
 }
-const userProfileDetails=async(req,res)=>{
-  
-   const id=req.session.userId
- 
-  const user=await Users.findOne({_id:new mongoose.Types.ObjectId(id)})
- 
-  
-res.render('userProfile',{user})
+const userProfileDetails = async (req, res) => {
+
+  const id = req.session.userId
+
+  const user = await Users.findOne({ _id: new mongoose.Types.ObjectId(id) })
+
+
+  res.render('userProfile', { user })
 }
 
 const saveUserProfile = async (req, res) => {
@@ -489,17 +498,17 @@ const verifyChangePhoneOtp = async (req, res) => {
   }
 }
 
-const userProfileEditAddress=async(req,res)=>{
-  
-  const id=req.session.userId
+const userProfileEditAddress = async (req, res) => {
 
- const user=await Users.findOne({_id:new mongoose.Types.ObjectId(id)})
+  const id = req.session.userId
 
- 
-res.render('userProfile-edit-address',{user})
+  const user = await Users.findOne({ _id: new mongoose.Types.ObjectId(id) })
+
+
+  res.render('userProfile-edit-address', { user })
 }
 
-const userProfileAddressDetails=async(req,res)=>{
+const userProfileAddressDetails = async (req, res) => {
   const id = req.session.userId
 
   const { name, mobile, locality, buildingname, landmark, city, state, pincode, addressType } = req.body
@@ -528,19 +537,19 @@ const userProfileAddressDetails=async(req,res)=>{
 
     console.log(error.message);
   }
-  
+
 
 }
 
-const userProfileOrdersList=(req,res)=>{
-  
-  
-res.render('userProfile-orders-list',{})
+const userProfileOrdersList = (req, res) => {
+
+
+  res.render('userProfile-orders-list', {})
 }
 
 
 
-const userProfileAddressList=async(req,res)=>{
+const userProfileAddressList = async (req, res) => {
 
   const id = req.session.userId;
 
@@ -551,7 +560,7 @@ const userProfileAddressList=async(req,res)=>{
     address = user.address;
   }
 
-res.render('userProfileAddressList',{address})
+  res.render('userProfileAddressList', { address })
 }
 
 const addAddressFromCheckout = async (req, res) => {
@@ -676,7 +685,7 @@ const deleteAddress = async (req, res) => {
 const currentOrders = async (req, res) => {
   const id = req.session.userId;
 
-  const orders = await Order.find({ user: new mongoose.Types.ObjectId(id) }).populate('cart.product').sort({createdAt:-1})
+  const orders = await Order.find({ user: new mongoose.Types.ObjectId(id) }).populate('cart.product').sort({ createdAt: -1 })
 
   res.render('userProfile-orders-list', { orders })
 }
@@ -712,7 +721,7 @@ const generatePDFReport = async (orders, res) => {
 
   // Add content to the PDF
   doc.fontSize(16).text('Order List', { align: 'center' });
- 
+
 
   // Loop through orders and add relevant fields to the PDF
   orders.forEach((order) => {
@@ -756,8 +765,8 @@ const generateExcelReport = async (orders, res) => {
       orderId: order.orderId,
       customerName: order.user.firstname,
       totalAmount: order.totalPrice,
-      status:order.status,
-      paymentMode:order.paymentMode,
+      status: order.status,
+      paymentMode: order.paymentMode,
       // Add more fields as needed
     });
   });
@@ -797,12 +806,12 @@ const loadOrderExcel = async (req, res) => {
 
 const loadOrdersList = async (req, res) => {
   try {
-    
-    const orders = await Order.find({}).sort({createdAt:-1}).populate('user');
 
-    res.render('admin-orders', { orders});
+    const orders = await Order.find({}).sort({ createdAt: -1 }).populate('user');
 
-   
+    res.render('admin-orders', { orders });
+
+
   } catch (error) {
     console.log(error.message);
   }
@@ -833,11 +842,11 @@ const loadOrdersDateList = async (req, res) => {
       },
     };
 
-    const orders = await Order.find(query).sort({createdAt:-1}).populate('user');
+    const orders = await Order.find(query).sort({ createdAt: -1 }).populate('user');
 
     res.render('admin-orders', { orders, startDate, endDate });
 
-   
+
   } catch (error) {
     console.log(error.message);
   }
@@ -858,27 +867,27 @@ const editOrderStatus = async (req, res) => {
 
 
 }
-const loadorderView=async(req,res)=>{
-  const orderId=req.query.orderId
+const loadorderView = async (req, res) => {
+  const orderId = req.query.orderId
 
   const order = await Order.findOne({ orderId }).populate('cart.product').populate("user")
 
 
 
 
-  res.render('adminOrderView',{order})
+  res.render('adminOrderView', { order })
 }
 
 const cancelOrder = async (req, res) => {
   const userid = req.session.userId;
-  const { orderId, refundMode,cartId } = req.body;
+  const { orderId, refundMode, cartId } = req.body;
 
   try {
     await Order.updateOne({ orderId: orderId }, { $set: { status: "Cancelled" } });
     await Order.updateOne(
       {
         orderId: orderId,
-        'cart._id':new mongoose.Types.ObjectId(cartId)
+        'cart._id': new mongoose.Types.ObjectId(cartId)
       },
       {
         $set: {
@@ -889,13 +898,13 @@ const cancelOrder = async (req, res) => {
 
     if (refundMode === "wallet") {
       const cancelledOrder = await Order.findOne({ orderId: orderId });
-    
+
       if (cancelledOrder) {
         const walletbalance = parseFloat(cancelledOrder.broughtPrice);
-    
+
         if (!isNaN(walletbalance)) {
           console.log('Wallet Balance:', walletbalance);
-    
+
           // Update the user's wallet balance
           await Users.updateOne(
             { _id: new mongoose.Types.ObjectId(userid) },
@@ -917,15 +926,15 @@ const cancelOrder = async (req, res) => {
 };
 
 
-const cancelCodOrder=async(req,res)=>{
-console.log(req.body);
-  const {orderId ,cartId}= req.body
+const cancelCodOrder = async (req, res) => {
+  console.log(req.body);
+  const { orderId, cartId } = req.body
 
   try {
     await Order.updateOne(
       {
         orderId: orderId,
-        'cart._id':new mongoose.Types.ObjectId(cartId)
+        'cart._id': new mongoose.Types.ObjectId(cartId)
       },
       {
         $set: {
@@ -933,11 +942,11 @@ console.log(req.body);
         }
       }
     );
-    
 
 
-    const order = await Order.findOne({ orderId:orderId}).populate('cart.product');
-  
+
+    const order = await Order.findOne({ orderId: orderId }).populate('cart.product');
+
     res.render('orderDetails', { order });
   } catch (error) {
     console.log(error);
@@ -948,119 +957,119 @@ console.log(req.body);
 
 
 
-const cancelWalletOrder=async(req,res)=>{
- 
-    const {orderId ,cartId}= req.body
-  
-    try {
-      await Order.updateOne(
-        {
-          orderId: orderId,
-          'cart._id':new mongoose.Types.ObjectId(cartId)
-        },
-        {
-          $set: {
-            'cart.$.status': 'Cancelled'
-          }
+const cancelWalletOrder = async (req, res) => {
+
+  const { orderId, cartId } = req.body
+
+  try {
+    await Order.updateOne(
+      {
+        orderId: orderId,
+        'cart._id': new mongoose.Types.ObjectId(cartId)
+      },
+      {
+        $set: {
+          'cart.$.status': 'Cancelled'
         }
-      );
-      const orderprice = await Order.findOne(
-        {
-          orderId: orderId,
-          'cart._id': new mongoose.Types.ObjectId(cartId)
-        },
-        {
-          'cart.broughtPrice': 1
-        }
-      );
-      
-    const broughtPrice=orderprice.cart[0].broughtPrice
-     console.log(orderprice);
-     console.log(broughtPrice);
+      }
+    );
+    const orderprice = await Order.findOne(
+      {
+        orderId: orderId,
+        'cart._id': new mongoose.Types.ObjectId(cartId)
+      },
+      {
+        'cart.broughtPrice': 1
+      }
+    );
 
-      const userid=req.session.userId
+    const broughtPrice = orderprice.cart[0].broughtPrice
+    console.log(orderprice);
+    console.log(broughtPrice);
 
-      const user=await Users.findOne({_id:new mongoose.Types.ObjectId(userid)})
+    const userid = req.session.userId
 
-      user.wallet+=Number(broughtPrice)
-      await user.save()
-      const order = await Order.findOne({ orderId:orderId}).populate('cart.product');
-    
-      res.render('orderDetails', { order });
-    } catch (error) {
-      console.log(error);
-    }
-  
-  
+    const user = await Users.findOne({ _id: new mongoose.Types.ObjectId(userid) })
+
+    user.wallet += Number(broughtPrice)
+    await user.save()
+    const order = await Order.findOne({ orderId: orderId }).populate('cart.product');
+
+    res.render('orderDetails', { order });
+  } catch (error) {
+    console.log(error);
   }
-  
-const userWalletDetails=async(req,res)=>{
-  
-  const userid=req.session.userId
 
- const user=await Users.findOne({_id:new mongoose.Types.ObjectId(userid)})
- const walletBalance=user.wallet
 
- 
-res.render('userWallet',{walletBalance})
 }
 
-const downloadInvoice=async(req,res)=>{
+const userWalletDetails = async (req, res) => {
+
+  const userid = req.session.userId
+
+  const user = await Users.findOne({ _id: new mongoose.Types.ObjectId(userid) })
+  const walletBalance = user.wallet
 
 
-  try{
-
-  const orderId=req.query.orderId
-  const order=await Order.findOne({orderId:orderId}).populate('cart.product') 
-  const products=[]
-
-for(let i=0;i<order.cart.length;i++){
- const productDetails= {
-
-    "quantity": order.cart[i].quantity,
-    "description": order.cart[i].product.description,
- 
-    "price": order.cart[i].broughtPrice,   
-   
-}
- products.push(productDetails)
+  res.render('userWallet', { walletBalance })
 }
 
-  const data = {
+const downloadInvoice = async (req, res) => {
 
-    "client": { 
 
-      "company": order.shippingAddress.name,
-      "address":  order.shippingAddress.buildingName,
-      "zip":  order.shippingAddress.pincode,
-      "city": order.shippingAddress.city,
-      "country":  order.shippingAddress.state,
-    },
+  try {
 
-    // Now let's add our own sender details
-    "sender": {
+    const orderId = req.query.orderId
+    const order = await Order.findOne({ orderId: orderId }).populate('cart.product')
+    const products = []
+
+    for (let i = 0; i < order.cart.length; i++) {
+      const productDetails = {
+
+        "quantity": order.cart[i].quantity,
+        "description": order.cart[i].product.description,
+
+        "price": order.cart[i].broughtPrice,
+
+      }
+      products.push(productDetails)
+    }
+
+    const data = {
+
+      "client": {
+
+        "company": order.shippingAddress.name,
+        "address": order.shippingAddress.buildingName,
+        "zip": order.shippingAddress.pincode,
+        "city": order.shippingAddress.city,
+        "country": order.shippingAddress.state,
+      },
+
+      // Now let's add our own sender details
+      "sender": {
         "company": "Ashion Clothing PVT LTD",
         "address": "Penny Parkway",
         "zip": "682012",
         "city": "Kochi",
         "country": "India"
-    },
+      },
 
 
-    // Let's add some standard invoice data, like invoice number, date and due-date
-    "information": {
-      // Invoice number
-      "number": order.orderId,
-      // Invoice data
-      "date": order.createdAt,
-      // Invoice due date
-      
-  },
-"products": products,
-  
-"bottom-notice": "This is a computer generated invoice.It doesnt require a physical signature",
-    "settings": {
-        "currency": "INR", 
+      // Let's add some standard invoice data, like invoice number, date and due-date
+      "information": {
+        // Invoice number
+        "number": order.orderId,
+        // Invoice data
+        "date": order.createdAt,
+        // Invoice due date
+
+      },
+      "products": products,
+
+      "bottom-notice": "This is a computer generated invoice.It doesnt require a physical signature",
+      "settings": {
+        "currency": "INR",
         "tax-notation": "gst"// See documentation 'Locales and Currency' for more info. Leave empty for no currency.
         /* 
          "locale": "nl-NL", // Defaults to en-US, used for number formatting (See documentation 'Locales and Currency')         
@@ -1075,42 +1084,42 @@ for(let i=0;i<order.cart.length;i++){
          "width": "500px", // allowed units: mm, cm, in, px
          "orientation": "landscape", // portrait or landscape, defaults to portrait         
          */
-    },
- 
-    /*
-        Last but not least, the translate parameter.
-        Used for translating the invoice to your preferred language.
-        Defaults to English. Below example is translated to Dutch.
-        We will not use translate in this sample to keep our samples readable.
-     */
-  
+      },
 
-    /*
-        Customize enables you to provide your own templates.
-        Please review the documentation for instructions and examples.
-        Leave this option blank to use the default template
-     */
-        customize: {
-          template: btoa(customTemplate), 
-        },
-};
-  
-   
-let file="AshionClothing_"+order.orderId+".pdf"
+      /*
+          Last but not least, the translate parameter.
+          Used for translating the invoice to your preferred language.
+          Defaults to English. Below example is translated to Dutch.
+          We will not use translate in this sample to keep our samples readable.
+       */
 
-easyinvoice.createInvoice(data, function (result) {
-  // Set the appropriate headers for browser download
-  res.setHeader('Content-Disposition', `attachment; filename="${file}"`);
-  res.setHeader('Content-Type', 'application/pdf');
 
-  // Send the generated PDF data as response to trigger browser download
-  res.send(Buffer.from(result.pdf, 'base64'));
-});
-} catch (error) {
-  // Handle the error here
-  console.error("An error occurred:", error);
-  res.status(500).send("Internal server error");
-}
+      /*
+          Customize enables you to provide your own templates.
+          Please review the documentation for instructions and examples.
+          Leave this option blank to use the default template
+       */
+      customize: {
+        template: btoa(customTemplate),
+      },
+    };
+
+
+    let file = "AshionClothing_" + order.orderId + ".pdf"
+
+    easyinvoice.createInvoice(data, function (result) {
+      // Set the appropriate headers for browser download
+      res.setHeader('Content-Disposition', `attachment; filename="${file}"`);
+      res.setHeader('Content-Type', 'application/pdf');
+
+      // Send the generated PDF data as response to trigger browser download
+      res.send(Buffer.from(result.pdf, 'base64'));
+    });
+  } catch (error) {
+    // Handle the error here
+    console.error("An error occurred:", error);
+    res.status(500).send("Internal server error");
+  }
 
 }
 
@@ -1118,7 +1127,7 @@ const loadWishlist = async (req, res) => {
   try {
     const userId = req.session.userId;
     const user = await Users.findOne({ _id: new mongoose.Types.ObjectId(userId) }).populate('wishlist.product');
-    
+
     if (!user) {
       // Handle the case where the user is not found
       return res.status(404).send("User not found");
@@ -1189,6 +1198,6 @@ module.exports = {
   loadOrderPdf,
   loadOrderExcel,
   loadOrdersDateList
-  
-  
+
+
 };

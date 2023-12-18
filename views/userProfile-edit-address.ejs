@@ -56,11 +56,12 @@
             height: 330px;
 
         }
-        .error-message{
-    color: red;
-    text-align: left;
-    font-size: 9px;
-}
+
+        .error-message {
+            color: red;
+            text-align: left;
+            font-size: 9px;
+        }
     </style>
 
 
@@ -90,21 +91,21 @@
                                     <li><a href="/user/wallet">Wallet</a></li>
                                 </ul>
                             </li>
-                        
+
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
-                       
+
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="/home/wishlist"><span class="icon_heart_alt"></span>
-                               
-                            </a></li>
+
+                                </a></li>
                             <li><a href="/home/cart"><span class="icon_bag_alt"></span>
-                                
-                            </a></li>
+
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -126,7 +127,7 @@
                     aria-controls="Addresses">Addresses</a>
                 <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
                     data-toggle="list" href="/user/profileOrders" role="tab" aria-controls="Orders">Orders</a>
-                    <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
+                <a class="list-group-item list-group-item-action" data-tab="orders" id="list-Orders-list"
                     data-toggle="list" href="/user/wallet" role="tab" aria-controls="Orders">Wallet</a>
                 <a class="list-group-item list-group-item-action" data-tab="logout" id="list-settings-list"
                     data-toggle="list" href="/user/logout" role="tab" aria-controls="settings">LogOut</a>
@@ -139,34 +140,36 @@
 
                 <div class="form-group">
                     <label for="inputAddress">Name*</label>
-                    <input type="text" class="form-control"  name="name" id="name" placeholder="Name">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
                     <div id="name-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Mobile*</label>
-                    <input type="text" class="form-control"  name="mobile" id="mobile" placeholder="Name">
+                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Name">
                     <div id="mobile-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Locality/Area/Street*</label>
-                    <input type="text" class="form-control"  name="locality" id="locality" placeholder="Locality/Area/Street">
+                    <input type="text" class="form-control" name="locality" id="locality"
+                        placeholder="Locality/Area/Street">
                     <div id="locality-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Flat Number/Building Name*</label>
-                    <input type="text" class="form-control"  name="buildingname" id="buildingname" placeholder="Building name">
+                    <input type="text" class="form-control" name="buildingname" id="buildingname"
+                        placeholder="Building name">
                     <div id="buildingname-error" class="error-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Landmark</label>
-                    <input type="text" class="form-control"  name="landmark" id="landmark" placeholder="Landmark">
+                    <input type="text" class="form-control" name="landmark" id="landmark" placeholder="Landmark">
                     <div id="landmark-error" class="error-message"></div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <label for="inputCity">State</label>
-                        <input type="text" class="form-control" placeholder="State" name="state" id="state" >
+                        <input type="text" class="form-control" placeholder="State" name="state" id="state">
                         <div id="state-error" class="error-message"></div>
                     </div>
                     <div class="col-md-4">
@@ -195,20 +198,20 @@
                         <input type="text" placeholder="Pin Code" name="pincode" id="pincode" class="form-control">
                         <div id="pincode-error" class="error-message"></div>
                     </div>
-                
+
                     <label>Address Type</label>
                     <div class="addressTypeRadio">
-                      <input type="radio" name="addressType" value="Home" id="homeRadio">
-                      <label for="homeRadio">Home</label>
-                
-                      <input type="radio" name="addressType" value="Work" id="workRadio">
-                      <label for="workRadio">Work</label>
-                
-                      <input type="radio" name="addressType" value="Others" id="othersRadio">
-                      <label for="othersRadio">Others</label>
+                        <input type="radio" name="addressType" value="Home" id="homeRadio">
+                        <label for="homeRadio">Home</label>
+
+                        <input type="radio" name="addressType" value="Work" id="workRadio">
+                        <label for="workRadio">Work</label>
+
+                        <input type="radio" name="addressType" value="Others" id="othersRadio">
+                        <label for="othersRadio">Others</label>
                     </div>
                     <div id="addressType-error" class="error-message"></div>
-                
+
                 </div>
 
 
